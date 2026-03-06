@@ -1,0 +1,129 @@
+/* Art direction: Professional NQ futures trading education → institutional, serious, dark-first
+   Palette: Cool dark (deep navy-black), accent: cyan (#06b6d4) — Bloomberg Terminal meets Stripe polish
+   Typography: Inter (display 700 + body 400-500) + JetBrains Mono (trading data) — precision, clarity
+   Density: Spacious for educational content, balanced for dashboard elements */
+
+/* ===== TYPE SCALE ===== */
+:root {
+  --text-xs:   clamp(0.75rem,  0.7rem  + 0.25vw, 0.875rem);
+  --text-sm:   clamp(0.875rem, 0.8rem  + 0.35vw, 1rem);
+  --text-base: clamp(1rem,     0.95rem + 0.25vw, 1.125rem);
+  --text-lg:   clamp(1.125rem, 1rem    + 0.75vw, 1.5rem);
+  --text-xl:   clamp(1.5rem,   1.2rem  + 1.25vw, 2.25rem);
+  --text-2xl:  clamp(2rem,     1.2rem  + 2.5vw,  3.5rem);
+  --text-3xl:  clamp(2.5rem,   1rem    + 4vw,    5rem);
+
+  /* ===== SPACING ===== */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.25rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  /* ===== RADIUS ===== */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+
+  /* ===== TRANSITIONS ===== */
+  --transition-interactive: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ===== CONTENT WIDTHS ===== */
+  --content-narrow: 640px;
+  --content-default: 960px;
+  --content-wide: 1200px;
+  --content-full: 100%;
+
+  /* ===== FONTS ===== */
+  --font-display: 'Inter', 'Helvetica Neue', sans-serif;
+  --font-body: 'Inter', 'Helvetica Neue', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+/* ===== DARK MODE (PRIMARY) ===== */
+:root, [data-theme="dark"] {
+  --color-bg:             #161d30;
+  --color-surface:        #1e2742;
+  --color-surface-2:      #283350;
+  --color-surface-offset: #1a2238;
+  --color-divider:        #313e5c;
+  --color-border:         #384868;
+
+  --color-text:           #f2f4f8;
+  --color-text-muted:     #c2cce0;
+  --color-text-faint:     #7b8ba8;
+  --color-text-inverse:   #161d30;
+
+  --color-primary:        #2fd4f0;
+  --color-primary-hover:  #5ce0f5;
+  --color-primary-active: #14b5d4;
+  --color-primary-highlight: rgba(47, 212, 240, 0.14);
+  --color-accent:         #2fd4f0;
+
+  --color-success:        #3ddc78;
+  --color-success-hover:  #6aeb9c;
+  --color-success-highlight: rgba(61, 220, 120, 0.14);
+
+  --color-error:          #f25e5e;
+  --color-error-hover:    #f58888;
+  --color-error-highlight: rgba(242, 94, 94, 0.14);
+
+  --color-warning:        #f5b133;
+  --color-warning-hover:  #f9ca60;
+  --color-warning-highlight: rgba(245, 177, 51, 0.14);
+
+  --color-gold:           #f9ca60;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 12px 36px rgba(0, 0, 0, 0.4);
+}
+
+/* ===== LIGHT MODE ===== */
+[data-theme="light"] {
+  --color-bg:             #f5f7fa;
+  --color-surface:        #ffffff;
+  --color-surface-2:      #f0f2f5;
+  --color-surface-offset: #e8ecf1;
+  --color-divider:        #d1d5db;
+  --color-border:         #c4cad4;
+
+  --color-text:           #111827;
+  --color-text-muted:     #6b7280;
+  --color-text-faint:     #9ca3af;
+  --color-text-inverse:   #f5f7fa;
+
+  --color-primary:        #0891b2;
+  --color-primary-hover:  #0e7490;
+  --color-primary-active: #155e75;
+  --color-primary-highlight: rgba(8, 145, 178, 0.08);
+  --color-accent:         #0891b2;
+
+  --color-success:        #16a34a;
+  --color-success-hover:  #15803d;
+  --color-success-highlight: rgba(22, 163, 74, 0.08);
+
+  --color-error:          #dc2626;
+  --color-error-hover:    #b91c1c;
+  --color-error-highlight: rgba(220, 38, 38, 0.08);
+
+  --color-warning:        #d97706;
+  --color-warning-hover:  #b45309;
+  --color-warning-highlight: rgba(217, 119, 6, 0.08);
+
+  --color-gold:           #d97706;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
+}
