@@ -146,7 +146,7 @@ var SECTIONS = [
     "phase": 2,
     "readTime": "28 min",
     "concepts": ["Aggressive vs Passive Orders", "Delta Divergence", "Absorption", "Exhaustion", "Confirmation"],
-    "youtubeId": null,
+    "youtubeId": "ZF_6h3cbEc0",
     "gammaDecks": ["https://gamma.app/embed/4nof4y3ckg97chq"],
     "chapters": [
       {
@@ -342,7 +342,7 @@ var SECTIONS = [
     "desc": "The professional pre-session routine for building directional bias and planning trade scenarios.",
     "phase": 4,
     "readTime": "25 min",
-    "youtubeId": "6f8CqCn1IkA",
+    "youtubeId": "ftSlFA9LyQw",
     "concepts": ["Morning Prep Routine", "Bias Framework", "Top-Down Analysis", "Scenario Planning"],
     "gammaDecks": [],
     "chapters": [
@@ -374,7 +374,7 @@ var SECTIONS = [
     "desc": "Closing the gap between analysis and execution with professional order management and risk controls.",
     "phase": 4,
     "readTime": "25 min",
-    "youtubeId": "rRAY3qzMvZg",
+    "youtubeId": "_A7Rh4Z8nOk",
     "concepts": ["Execution Gap", "Order Types", "Position Sizing", "Max Daily Loss", "Scaling"],
     "gammaDecks": [],
     "chapters": [
