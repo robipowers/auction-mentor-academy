@@ -376,7 +376,7 @@ var SECTIONS = [
     "readTime": "25 min",
     "youtubeId": "_A7Rh4Z8nOk",
     "concepts": ["Execution Gap", "Order Types", "Position Sizing", "Max Daily Loss", "Scaling"],
-    "gammaDecks": [],
+    "gammaDecks": ["https://gamma.app/embed/zcb7ck1iw25ucmg"],
     "chapters": [
       {
         "title": "The Execution Problem",
