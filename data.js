@@ -147,7 +147,7 @@ var SECTIONS = [
     "readTime": "28 min",
     "concepts": ["Aggressive vs Passive Orders", "Delta Divergence", "Absorption", "Exhaustion", "Confirmation"],
     "youtubeId": "ZF_6h3cbEc0",
-    "gammaDecks": ["https://gamma.app/embed/4nof4y3ckg97chq"],
+    "gammaDecks": ["https://gamma.app/embed/c1oss0gseb3lgkf"],
     "chapters": [
       {
         "title": "What is Delta?",
