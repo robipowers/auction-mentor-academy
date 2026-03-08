@@ -344,7 +344,7 @@ var SECTIONS = [
     "readTime": "25 min",
     "youtubeId": "ftSlFA9LyQw",
     "concepts": ["Morning Prep Routine", "Bias Framework", "Top-Down Analysis", "Scenario Planning"],
-    "gammaDecks": [],
+    "gammaDecks": ["https://gamma.app/embed/9cxmumfx6qrv35k"],
     "chapters": [
       {
         "title": "Pre-Session Checklist",
