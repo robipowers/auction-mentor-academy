@@ -311,7 +311,7 @@ var SECTIONS = [
     "phase": 3,
     "readTime": "30 min",
     "concepts": ["Trade Models", "Entry Criteria", "Stop Placement", "Targets", "Rules-Based Trading"],
-    "youtubeId": "1-daj8Sop8g",
+    "youtubeId": "L2EI1c-LyME",
     "gammaDecks": ["https://gamma.app/embed/5f7mc3ejo27ei1h"],
     "chapters": [
       {
