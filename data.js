@@ -279,7 +279,7 @@ var SECTIONS = [
     "phase": 3,
     "readTime": "28 min",
     "concepts": ["Interest Rates", "DXY", "VIX", "Yield Curve", "FOMC", "NFP", "CPI"],
-    "youtubeId": null,
+    "youtubeId": "hYhaeNO7kFw",
     "gammaDecks": ["https://gamma.app/embed/wgnricz611q9ubt"],
     "chapters": [
       {
