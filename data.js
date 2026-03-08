@@ -342,6 +342,7 @@ var SECTIONS = [
     "desc": "The professional pre-session routine for building directional bias and planning trade scenarios.",
     "phase": 4,
     "readTime": "25 min",
+    "youtubeId": "6f8CqCn1IkA",
     "concepts": ["Morning Prep Routine", "Bias Framework", "Top-Down Analysis", "Scenario Planning"],
     "gammaDecks": [],
     "chapters": [
@@ -373,6 +374,7 @@ var SECTIONS = [
     "desc": "Closing the gap between analysis and execution with professional order management and risk controls.",
     "phase": 4,
     "readTime": "25 min",
+    "youtubeId": "rRAY3qzMvZg",
     "concepts": ["Execution Gap", "Order Types", "Position Sizing", "Max Daily Loss", "Scaling"],
     "gammaDecks": [],
     "chapters": [
@@ -404,6 +406,7 @@ var SECTIONS = [
     "desc": "Mastering the mental game of trading: cognitive biases, emotional regulation, and the professional mindset.",
     "phase": 4,
     "readTime": "25 min",
+    "youtubeId": "pbWiQ4G3LtY",
     "concepts": ["Loss Aversion", "Confirmation Bias", "Tilt", "Journal Review", "Process Over Outcome"],
     "gammaDecks": [],
     "chapters": [
