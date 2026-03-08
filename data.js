@@ -312,7 +312,7 @@ var SECTIONS = [
     "readTime": "30 min",
     "concepts": ["Trade Models", "Entry Criteria", "Stop Placement", "Targets", "Rules-Based Trading"],
     "youtubeId": "1-daj8Sop8g",
-    "gammaDecks": [],
+    "gammaDecks": ["https://gamma.app/embed/5f7mc3ejo27ei1h"],
     "chapters": [
       {
         "title": "Building a Trade Plan",
