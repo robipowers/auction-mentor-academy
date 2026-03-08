@@ -83,5 +83,43 @@
 
   <script src="data.js"></script>
   <script src="app.js"></script>
+  <script>
+    // Level 1: Anti-Copy & Anti-Inspect Deterrents
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (
+        e.key === 'F12' ||
+        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
+        (e.metaKey && e.altKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
+        (e.ctrlKey && e.key === 'U') ||
+        (e.metaKey && e.altKey && e.key === 'U') ||
+        (e.ctrlKey && e.key === 'S') ||
+        (e.metaKey && e.key === 'S') ||
+        (e.ctrlKey && e.key === 'P') ||
+        (e.metaKey && e.key === 'P') ||
+        (e.ctrlKey && e.key === 'C') ||
+        (e.metaKey && e.key === 'C')
+      ) {
+        e.preventDefault();
+        return false;
+      }
+    });
+  </script>
+  <style>
+    body {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+    input, textarea {
+      -webkit-user-select: auto;
+      -moz-user-select: auto;
+      -ms-user-select: auto;
+      user-select: auto;
+    }
+  </style>
 </body>
 </html>
