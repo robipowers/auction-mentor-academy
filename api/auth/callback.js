@@ -25,13 +25,15 @@ export default async function handler(req, res) {
                 client_secret: process.env.WHOP_CLIENT_SECRET,
                 code,
                 grant_type: 'authorization_code',
-                redirect_uri: process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}/api/auth/callback` : 'http://localhost:3000/api/auth/callback'
+                redirect_uri: req.headers.host.includes('localhost')
+                    ? `http://${req.headers.host}/api/auth/callback`
+                    : `https://${req.headers.host}/api/auth/callback`
             })
         });
 
         const tokenData = await tokenResponse.json();
         if (!tokenData.access_token) {
-            return res.status(401).send('Failed to authenticate with Whop');
+            return res.status(401).send(`Failed to authenticate with Whop: ${JSON.stringify(tokenData)}`);
         }
 
         // 3. We have Whop access. Now let's fetch their Whop profile (email & ID)
