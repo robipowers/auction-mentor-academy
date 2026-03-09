@@ -16,6 +16,13 @@ export default async function handler(req, res) {
     }
 
     try {
+        const cookies = req.headers.cookie ? cookie.parse(req.headers.cookie) : {};
+        const code_verifier = cookies.whop_code_verifier;
+
+        if (!code_verifier) {
+            return res.status(400).send('Missing Whop PKCE code verifier cookie (make sure your browser allows cookies).');
+        }
+
         // 2. Ask Whop: "Who is this person?"
         const tokenResponse = await fetch('https://api.whop.com/oauth/token', {
             method: 'POST',
@@ -24,6 +31,7 @@ export default async function handler(req, res) {
                 client_id: process.env.WHOP_CLIENT_ID,
                 client_secret: process.env.WHOP_CLIENT_SECRET,
                 code,
+                code_verifier,
                 grant_type: 'authorization_code',
                 redirect_uri: req.headers.host.includes('localhost')
                     ? `http://${req.headers.host}/api/auth/callback`
