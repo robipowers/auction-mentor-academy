@@ -16,13 +16,6 @@ export default async function handler(req, res) {
     }
 
     try {
-        const cookies = req.headers.cookie ? cookie.parse(req.headers.cookie) : {};
-        const code_verifier = cookies.whop_code_verifier;
-
-        if (!code_verifier) {
-            return res.status(400).send('Missing Whop PKCE code verifier cookie (make sure your browser allows cookies).');
-        }
-
         // 2. Ask Whop: "Who is this person?"
         const redirect_uri = 'https://auction-mentor-academy.vercel.app/api/auth/callback';
 
@@ -31,12 +24,11 @@ export default async function handler(req, res) {
         const client_secret = 'apik_IJ3tt6t7vEsVl_A2029476_C_3c8dbde1fa2dab98ac9dbb586ad9dccf834e19ef65498d3ac74e43c1c6c357';
 
         const params = new URLSearchParams();
+        params.append('grant_type', 'authorization_code');
+        params.append('code', code);
+        params.append('redirect_uri', redirect_uri);
         params.append('client_id', client_id);
         params.append('client_secret', client_secret);
-        params.append('code', code);
-        params.append('code_verifier', code_verifier);
-        params.append('grant_type', 'authorization_code');
-        params.append('redirect_uri', redirect_uri);
 
         const tokenResponse = await fetch('https://api.whop.com/oauth/token', {
             method: 'POST',
@@ -56,9 +48,9 @@ export default async function handler(req, res) {
                         <div style="text-align: left; max-width: 600px; margin: 0 auto; background: #222; color: #0f0; padding: 10px; font-family: monospace; border-radius: 5px; overflow-wrap: break-word;">
                             <b>DEBUG INFO:</b><br>
                             code: ${code}<br>
-                            code_verifier: ${code_verifier}<br>
                             client_id (used): ${client_id}<br>
                             client_secret (used starts with): ${client_secret.substring(0, 10)}...<br>
+                            redirect_uri: ${redirect_uri}<br>
                         </div>
                         <br>
                         <a href="/" style="display: inline-block; padding: 10px 20px; background: #ff6243; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">Click Here to Start Over</a>

@@ -87,31 +87,10 @@
     </div>
   </div>
   <script>
-    document.getElementById('whop-login-btn').addEventListener('click', async function (e) {
+    document.getElementById('whop-login-btn').addEventListener('click', function (e) {
       e.preventDefault();
-
-      // Generate a secure random string for the PKCE code verifier
-      const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
-      const array = new Uint8Array(64);
-      window.crypto.getRandomValues(array);
-      let codeVerifier = '';
-      for (let i = 0; i < array.length; i++) {
-        codeVerifier += charset[array[i] % charset.length];
-      }
-
-      // Save code_verifier to a cookie to be read by the Vercel backend
-      document.cookie = `whop_code_verifier=${codeVerifier}; path=/; max-age=300; Secure; SameSite=Lax`;
-
-      // Hash the verifier into a code_challenge (SHA-256)
-      const encoder = new TextEncoder();
-      const hashBuffer = await window.crypto.subtle.digest('SHA-256', encoder.encode(codeVerifier));
-      const hashArray = Array.from(new Uint8Array(hashBuffer));
-      const codeChallenge = btoa(String.fromCharCode.apply(null, hashArray))
-        .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-
-      // Redirect to Whop OAuth with PKCE parameters
       const redirectUri = window.location.origin + '/api/auth/callback';
-      window.location.href = `https://whop.com/oauth?client_id=app_W2HoBJo1SsbLan&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&code_challenge=${codeChallenge}&code_challenge_method=S256`;
+      window.location.href = `https://whop.com/oauth?client_id=app_W2HoBJo1SsbLan&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code`;
     });
   </script>
   <script>
