@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import * as cookie from 'cookie';
+import crypto from 'crypto';
 
 // Initialize Supabase with the hidden Service Role (Admin) key so we can force-login users
 const supabase = createClient(
@@ -57,10 +58,12 @@ export default async function handler(req, res) {
                         <div style="text-align: left; max-width: 600px; margin: 0 auto; background: #222; color: #0f0; padding: 10px; font-family: monospace; border-radius: 5px; overflow-wrap: break-word;">
                             <b>DEBUG INFO:</b><br>
                             code: ${code}<br>
-                            code_verifier (from state): ${code_verifier}<br>
-                            client_id (used): ${client_id}<br>
-                            client_secret (used starts with): ${client_secret.substring(0, 10)}...<br>
+                            code_verifier (from cookie): ${code_verifier}<br>
+                            computed challenge: ${crypto.createHash('sha256').update(code_verifier).digest('base64url')}<br>
+                            client_id: ${client_id}<br>
+                            client_secret starts: ${client_secret.substring(0, 10)}...<br>
                             redirect_uri: ${redirect_uri}<br>
+                            raw cookies: ${req.headers.cookie || 'NONE'}<br>
                         </div>
                         <br>
                         <a href="/" style="display: inline-block; padding: 10px 20px; background: #ff6243; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">Click Here to Start Over</a>
