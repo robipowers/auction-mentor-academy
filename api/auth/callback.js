@@ -48,6 +48,14 @@ export default async function handler(req, res) {
                         <h2 style="color: red;">Authentication Failed</h2>
                         <p>Whop rejected the login code. This usually happens if the code expired or the page was refreshed.</p>
                         <p style="background: #eee; padding: 10px; max-width: 600px; margin: 0 auto; border-radius: 5px; font-family: monospace;">Error: ${JSON.stringify(tokenData)}</p>
+                        <hr style="max-width: 600px; margin: 20px auto;">
+                        <div style="text-align: left; max-width: 600px; margin: 0 auto; background: #222; color: #0f0; padding: 10px; font-family: monospace; border-radius: 5px; overflow-wrap: break-word;">
+                            <b>DEBUG INFO:</b><br>
+                            code: ${code}<br>
+                            code_verifier: ${code_verifier}<br>
+                            client_id (from env): ${process.env.WHOP_CLIENT_ID || 'MISSING'}<br>
+                            client_secret (exists): ${process.env.WHOP_CLIENT_SECRET ? 'YES' : 'NO'}
+                        </div>
                         <br>
                         <a href="/" style="display: inline-block; padding: 10px 20px; background: #ff6243; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">Click Here to Start Over</a>
                     </body>
