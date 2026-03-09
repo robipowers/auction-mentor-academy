@@ -52,29 +52,11 @@
         <circle cx="22" cy="2" r="2" fill="#6ee7b7" />
       </svg>
       <h1 style="color:#fff;font-size:20px;font-weight:600;margin:0 0 6px;">Auction Mentor Academy</h1>
-      <p style="color:#888;font-size:14px;margin:0 0 28px;">Sign in to sync your progress.</p>
-      <form id="authForm" autocomplete="off">
-        <input id="authEmail" type="email" placeholder="Email Address" required
-          style="width:100%;box-sizing:border-box;margin-bottom:12px;padding:12px 16px;border:1px solid #2a2a3e;border-radius:8px;background:#1a1a2e;color:#fff;font-size:15px;font-family:Inter,system-ui,sans-serif;outline:none;transition:border-color .2s;"
-          onfocus="this.style.borderColor='#6ee7b7'" onblur="this.style.borderColor='#2a2a3e'">
-        <input id="authPassword" type="password" placeholder="Password" required
-          style="width:100%;box-sizing:border-box;padding:12px 16px;border:1px solid #2a2a3e;border-radius:8px;background:#1a1a2e;color:#fff;font-size:15px;font-family:Inter,system-ui,sans-serif;outline:none;transition:border-color .2s;"
-          onfocus="this.style.borderColor='#6ee7b7'" onblur="this.style.borderColor='#2a2a3e'">
-        <p id="authError" style="color:#f87171;font-size:13px;margin:10px 0 0;display:none;"></p>
-        <button type="submit" id="authSubmit"
-          style="width:100%;margin-top:16px;padding:12px;border:none;border-radius:8px;background:#6ee7b7;color:#0f0f1a;font-size:15px;font-weight:600;font-family:Inter,system-ui,sans-serif;cursor:pointer;transition:opacity .2s;"
-          onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">Log In</button>
-      </form>
+      <p style="color:#888;font-size:14px;margin:0 0 28px;">Log in with your Whop account to access your course.</p>
 
-      <div style="margin:20px 0;display:flex;align-items:center;color:#444;">
-        <hr style="flex:1;border:0;border-top:1px solid #2a2a3e;"><span style="padding:0 10px;font-size:12px;">OR</span>
-        <hr style="flex:1;border:0;border-top:1px solid #2a2a3e;">
-      </div>
-
-      <a href="#" id="whop-login-btn"
-        style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;box-sizing:border-box;padding:12px;border:1px solid #ff6243;border-radius:8px;background:transparent;color:#ff6243;text-decoration:none;font-size:15px;font-weight:600;font-family:Inter,system-ui,sans-serif;cursor:pointer;transition:all .2s;"
-        onmouseover="this.style.background='#ff6243';this.style.color='#fff'"
-        onmouseout="this.style.background='transparent';this.style.color='#ff6243'">
+      <a href="/api/auth/login" id="whop-login-btn"
+        style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;box-sizing:border-box;padding:14px;border:none;border-radius:8px;background:#ff6243;color:#fff;text-decoration:none;font-size:16px;font-weight:600;font-family:Inter,system-ui,sans-serif;cursor:pointer;transition:opacity .2s;"
+        onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M14.659 13.916 24 3.1 19.868 21.6h-4.991l-1.92-7.962h-.056L10.982 21.6H5.99L2.836 7.641l4.57-.463 1.636 6.786h.056l1.921-7.962h3.91l1.865 7.914h.056Z" />
@@ -82,29 +64,16 @@
         Log in with Whop
       </a>
 
-      <p style="color:#888;font-size:13px;margin-top:16px;cursor:pointer;transition:color .2s;" id="authToggle"
-        onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#888'">Need an account? Sign up</p>
+      <p style="color:#555;font-size:12px;margin-top:20px;">You need an active Whop membership to access this course.
+      </p>
     </div>
   </div>
-  <script>
-    document.getElementById('whop-login-btn').addEventListener('click', function (e) {
-      e.preventDefault();
-      window.location.href = '/api/auth/login';
-    });
-  </script>
   <script>
     const SUPABASE_URL = 'https://xujfzlsorjgrpmiayhhm.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_PVT4uba8fjTLWkJkLlQA8Q_78m2B89E';
     window.supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    let isLogin = true;
     const gate = document.getElementById("authGate");
-    const form = document.getElementById("authForm");
-    const emailInput = document.getElementById("authEmail");
-    const passwordInput = document.getElementById("authPassword");
-    const err = document.getElementById("authError");
-    const toggle = document.getElementById("authToggle");
-    const subBtn = document.getElementById("authSubmit");
 
     // Check if session exists on load
     window.supabaseClient.auth.getSession().then(({ data: { session } }) => {
@@ -121,45 +90,6 @@
         if (window.onAppReady) window.onAppReady();
       } else {
         gate.style.display = "flex";
-      }
-    });
-
-    toggle.addEventListener("click", () => {
-      isLogin = !isLogin;
-      toggle.innerText = isLogin ? "Need an account? Sign up" : "Already have an account? Log in";
-      subBtn.innerText = isLogin ? "Log In" : "Sign Up";
-      err.style.display = "none";
-    });
-
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      err.style.display = "none";
-      subBtn.innerText = "Processing...";
-      subBtn.style.opacity = "0.5";
-
-      const email = emailInput.value;
-      const password = passwordInput.value;
-
-      try {
-        let error = null;
-        if (isLogin) {
-          const res = await window.supabaseClient.auth.signInWithPassword({ email, password });
-          error = res.error;
-        } else {
-          const res = await window.supabaseClient.auth.signUp({ email, password });
-          error = res.error;
-          if (!error && res.data?.user?.identities?.length === 0) {
-            throw new Error("User already exists. Please log in.");
-          }
-        }
-
-        if (error) throw error;
-      } catch (e) {
-        err.innerText = e.message;
-        err.style.display = "block";
-      } finally {
-        subBtn.innerText = isLogin ? "Log In" : "Sign Up";
-        subBtn.style.opacity = "1";
       }
     });
   </script>
