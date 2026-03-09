@@ -159,8 +159,9 @@
       '</nav>' +
       '<div class="topbar-actions">' +
       '<a href="#rules" class="nav-link" aria-label="Trading Rules">Rules</a>' +
-      '<button id="theme-toggle" class="btn-icon" aria-label="Switch to light mode">' +
+      '<button id="theme-toggle" class="btn-icon" aria-label="Switch to light mode" style="margin-right:12px;">' +
       (state.theme === "dark" ? ICONS.sun : ICONS.moon) + '</button>' +
+      '<button id="auth-signout" class="btn btn-secondary" style="padding:6px 12px;font-size:13px;border-color:#3a3a4e;">Sign Out</button>' +
       '</div></header>';
   }
 
@@ -417,7 +418,15 @@
   }
 
   function markChapterComplete(sectionId, chapterIdx) {
-    state.completedChapters[sectionId + "-" + chapterIdx] = true;
+    var key = sectionId + "-" + chapterIdx;
+    if (!state.completedChapters[key]) {
+      state.completedChapters[key] = true;
+      if (window.supabaseClient && state.userId) {
+        window.supabaseClient.from("user_progress").insert([
+          { user_id: state.userId, section_id: sectionId, chapter_idx: chapterIdx }
+        ]).then(function () { });
+      }
+    }
   }
 
   function closeSidebar() {
@@ -666,6 +675,12 @@
       state.completedSections[state.currentQuiz] = true;
     }
 
+    if (window.supabaseClient && state.userId) {
+      window.supabaseClient.from("quiz_scores").upsert([
+        { user_id: state.userId, section_id: state.currentQuiz, score: score, passed: passed }
+      ], { onConflict: 'user_id, section_id' }).then(function () { });
+    }
+
     var section = getSection(state.currentQuiz);
     var nextSection = getSection(Number(state.currentQuiz) + 1);
 
@@ -763,19 +778,60 @@
     if (themeBtn) {
       themeBtn.addEventListener("click", toggleTheme);
     }
+    var signoutBtn = $("#auth-signout");
+    if (signoutBtn) {
+      signoutBtn.addEventListener("click", function () {
+        if (window.supabaseClient) {
+          window.supabaseClient.auth.signOut().then(function () {
+            window.location.reload();
+          });
+        }
+      });
+    }
   }
 
   // ── Init ──
-  function init() {
+  async function loadProgressFromDB() {
+    if (!window.supabaseClient) return;
+    var res = await window.supabaseClient.auth.getUser();
+    var user = res.data ? res.data.user : null;
+    if (!user) return;
+    state.userId = user.id;
+
+    var chaptersRes = await window.supabaseClient.from("user_progress").select("section_id, chapter_idx");
+    if (chaptersRes.data) {
+      chaptersRes.data.forEach(function (c) {
+        state.completedChapters[c.section_id + "-" + c.chapter_idx] = true;
+      });
+    }
+
+    var scoresRes = await window.supabaseClient.from("quiz_scores").select("section_id, score, passed");
+    if (scoresRes.data) {
+      scoresRes.data.forEach(function (s) {
+        state.quizScores[s.section_id] = s.score;
+        if (s.passed) {
+          state.completedSections[s.section_id] = true;
+        }
+      });
+    }
+  }
+
+  async function init() {
     initTheme();
+
+    // Quick loading state while fetching database progress
+    var app = document.getElementById("app");
+    if (app) app.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;color:#888;">Loading your progress...</div>';
+
+    await loadProgressFromDB();
     onRouteChange();
     window.addEventListener("hashchange", onRouteChange);
   }
 
-  // Run on DOM ready
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
-  } else {
+  // Triggered by index.html when Supabase auth confirms the session
+  window.onAppReady = function () {
+    if (window.appInitialized) return;
+    window.appInitialized = true;
     init();
-  }
+  };
 })();
