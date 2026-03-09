@@ -25,6 +25,7 @@ export default function handler(req, res) {
         + '?client_id=app_W2HoBJo1SsbLan'
         + '&redirect_uri=' + encodeURIComponent(redirectUri)
         + '&response_type=code'
+        + '&scope=' + encodeURIComponent('openid profile email')
         + '&code_challenge=' + codeChallenge
         + '&code_challenge_method=S256';
 
