@@ -24,6 +24,8 @@ export default async function handler(req, res) {
         }
 
         // 2. Ask Whop: "Who is this person?"
+        const redirect_uri = 'https://auction-mentor-academy.vercel.app/api/auth/callback';
+
         const tokenResponse = await fetch('https://api.whop.com/oauth/token', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -33,15 +35,23 @@ export default async function handler(req, res) {
                 code,
                 code_verifier,
                 grant_type: 'authorization_code',
-                redirect_uri: req.headers.host.includes('localhost')
-                    ? `http://${req.headers.host}/api/auth/callback`
-                    : `https://${req.headers.host}/api/auth/callback`
+                redirect_uri
             })
         });
 
         const tokenData = await tokenResponse.json();
         if (!tokenData.access_token) {
-            return res.status(401).send(`Failed to authenticate with Whop: ${JSON.stringify(tokenData)}`);
+            return res.status(401).send(`
+                <html>
+                    <body style="font-family: Arial, sans-serif; text-align: center; margin-top: 50px;">
+                        <h2 style="color: red;">Authentication Failed</h2>
+                        <p>Whop rejected the login code. This usually happens if the code expired or the page was refreshed.</p>
+                        <p style="background: #eee; padding: 10px; max-width: 600px; margin: 0 auto; border-radius: 5px; font-family: monospace;">Error: ${JSON.stringify(tokenData)}</p>
+                        <br>
+                        <a href="/" style="display: inline-block; padding: 10px 20px; background: #ff6243; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">Click Here to Start Over</a>
+                    </body>
+                </html>
+            `);
         }
 
         // 3. We have Whop access. Now let's fetch their Whop profile (email & ID)
@@ -79,6 +89,15 @@ export default async function handler(req, res) {
 
     } catch (error) {
         console.error(error);
-        res.status(500).send('Internal Server Error during Whop Authentication');
+        res.status(500).send(`
+            <html>
+                <body style="font-family: Arial, sans-serif; text-align: center; margin-top: 50px;">
+                    <h2 style="color: red;">System Error</h2>
+                    <p>Something went wrong on our end.</p>
+                    <br>
+                    <a href="/" style="display: inline-block; padding: 10px 20px; background: #ff6243; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">Click Here to Start Over</a>
+                </body>
+            </html>
+        `);
     }
 }
