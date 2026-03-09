@@ -107,8 +107,15 @@ export default async function handler(req, res) {
             return res.status(500).send('Failed to generate secure Supabase session');
         }
 
+        // Fix the redirect URL in the magic link (Supabase Site URL may be set to localhost)
+        let actionLink = authData.properties.action_link;
+        actionLink = actionLink.replace(
+            /redirect_to=http%3A%2F%2Flocalhost[^&]*/,
+            'redirect_to=' + encodeURIComponent('https://auction-mentor-academy.vercel.app')
+        );
+
         // 6. Redirect them to the magic link, which securely logs them in and drops them into the Academy
-        res.redirect(302, authData.properties.action_link);
+        res.redirect(302, actionLink);
 
     } catch (error) {
         console.error(error);
