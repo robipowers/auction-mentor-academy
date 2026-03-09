@@ -16,6 +16,14 @@ export default async function handler(req, res) {
     }
 
     try {
+        // Read the PKCE code_verifier from the cookie set by the frontend
+        const cookies = req.headers.cookie ? cookie.parse(req.headers.cookie) : {};
+        const code_verifier = cookies.cv;
+
+        if (!code_verifier) {
+            return res.status(400).send('Missing PKCE code verifier cookie. Make sure cookies are enabled and try again.');
+        }
+
         // 2. Ask Whop: "Who is this person?"
         const redirect_uri = 'https://auction-mentor-academy.vercel.app/api/auth/callback';
 
@@ -29,6 +37,7 @@ export default async function handler(req, res) {
         params.append('redirect_uri', redirect_uri);
         params.append('client_id', client_id);
         params.append('client_secret', client_secret);
+        params.append('code_verifier', code_verifier);
 
         const tokenResponse = await fetch('https://api.whop.com/oauth/token', {
             method: 'POST',

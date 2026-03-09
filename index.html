@@ -87,10 +87,28 @@
     </div>
   </div>
   <script>
-    document.getElementById('whop-login-btn').addEventListener('click', function (e) {
+    document.getElementById('whop-login-btn').addEventListener('click', async function (e) {
       e.preventDefault();
+
+      // Generate code_verifier: 64 hex chars (only 0-9a-f, completely cookie-safe)
+      const arr = new Uint8Array(32);
+      crypto.getRandomValues(arr);
+      const codeVerifier = Array.from(arr, b => b.toString(16).padStart(2, '0')).join('');
+
+      // Store in cookie for the backend to read after redirect
+      document.cookie = 'cv=' + codeVerifier + '; path=/; max-age=300; Secure; SameSite=Lax';
+
+      // Create code_challenge = base64url(sha256(code_verifier))
+      const hash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(codeVerifier));
+      const codeChallenge = btoa(String.fromCharCode(...new Uint8Array(hash)))
+        .replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+
       const redirectUri = window.location.origin + '/api/auth/callback';
-      window.location.href = `https://whop.com/oauth?client_id=app_W2HoBJo1SsbLan&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code`;
+      window.location.href = 'https://whop.com/oauth?client_id=app_W2HoBJo1SsbLan'
+        + '&redirect_uri=' + encodeURIComponent(redirectUri)
+        + '&response_type=code'
+        + '&code_challenge=' + codeChallenge
+        + '&code_challenge_method=S256';
     });
   </script>
   <script>
