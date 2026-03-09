@@ -71,7 +71,7 @@
         <hr style="flex:1;border:0;border-top:1px solid #2a2a3e;">
       </div>
 
-      <a href="https://whop.com/oauth?client_id=app_W2HoBJo1SsbLan&redirect_uri=http://localhost:3000/api/auth/callback&response_type=code"
+      <a href="#" id="whop-login-btn"
         style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;box-sizing:border-box;padding:12px;border:1px solid #ff6243;border-radius:8px;background:transparent;color:#ff6243;text-decoration:none;font-size:15px;font-weight:600;font-family:Inter,system-ui,sans-serif;cursor:pointer;transition:all .2s;"
         onmouseover="this.style.background='#ff6243';this.style.color='#fff'"
         onmouseout="this.style.background='transparent';this.style.color='#ff6243'">
@@ -86,6 +86,13 @@
         onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#888'">Need an account? Sign up</p>
     </div>
   </div>
+  <script>
+    document.getElementById('whop-login-btn').addEventListener('click', function (e) {
+      e.preventDefault();
+      const redirectUri = window.location.origin + '/api/auth/callback';
+      window.location.href = `https://whop.com/oauth?client_id=app_W2HoBJo1SsbLan&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code`;
+    });
+  </script>
   <script>
     const SUPABASE_URL = 'https://xujfzlsorjgrpmiayhhm.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_PVT4uba8fjTLWkJkLlQA8Q_78m2B89E';
