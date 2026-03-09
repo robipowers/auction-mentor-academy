@@ -27,7 +27,7 @@ export default async function handler(req, res) {
         const redirect_uri = 'https://auction-mentor-academy.vercel.app/api/auth/callback';
 
         const params = new URLSearchParams();
-        params.append('client_id', process.env.WHOP_CLIENT_ID);
+        params.append('client_id', 'app_W2HoBJo1SsbLan'); // Hardcoded to prevent typo from Vercel ENV
         params.append('client_secret', process.env.WHOP_CLIENT_SECRET);
         params.append('code', code);
         params.append('code_verifier', code_verifier);
