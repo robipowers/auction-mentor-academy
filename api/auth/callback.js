@@ -26,9 +26,9 @@ export default async function handler(req, res) {
         // 2. Ask Whop: "Who is this person?"
         const redirect_uri = 'https://auction-mentor-academy.vercel.app/api/auth/callback';
 
-        // Prevent typo from Vercel ENV by hardcoding the correct Client ID
+        // TEMPORARY: Hardcode both credentials to eliminate Vercel ENV issues
         const client_id = 'app_W2HoBJo1SsbLan';
-        const client_secret = (process.env.WHOP_CLIENT_SECRET || '').trim();
+        const client_secret = 'apik_IJ3tt6t7vEsVl_A2029476_C_3c8dbde1fa2dab98ac9dbb586ad9dccf834e19ef65498d3ac74e43c1c6c357';
 
         const params = new URLSearchParams();
         params.append('client_id', client_id);
