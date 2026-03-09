@@ -16,12 +16,11 @@ export default async function handler(req, res) {
     }
 
     try {
-        // Read the PKCE code_verifier from the cookie set by the frontend
-        const cookies = req.headers.cookie ? cookie.parse(req.headers.cookie) : {};
-        const code_verifier = cookies.cv;
+        // Read the PKCE code_verifier from the state query parameter
+        const code_verifier = req.query.state;
 
         if (!code_verifier) {
-            return res.status(400).send('Missing PKCE code verifier cookie. Make sure cookies are enabled and try again.');
+            return res.status(400).send('Missing PKCE code verifier (state parameter). Try again.');
         }
 
         // 2. Ask Whop: "Who is this person?"
@@ -57,6 +56,7 @@ export default async function handler(req, res) {
                         <div style="text-align: left; max-width: 600px; margin: 0 auto; background: #222; color: #0f0; padding: 10px; font-family: monospace; border-radius: 5px; overflow-wrap: break-word;">
                             <b>DEBUG INFO:</b><br>
                             code: ${code}<br>
+                            code_verifier (from state): ${code_verifier}<br>
                             client_id (used): ${client_id}<br>
                             client_secret (used starts with): ${client_secret.substring(0, 10)}...<br>
                             redirect_uri: ${redirect_uri}<br>
