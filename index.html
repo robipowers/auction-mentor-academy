@@ -65,6 +65,23 @@
           style="width:100%;margin-top:16px;padding:12px;border:none;border-radius:8px;background:#6ee7b7;color:#0f0f1a;font-size:15px;font-weight:600;font-family:Inter,system-ui,sans-serif;cursor:pointer;transition:opacity .2s;"
           onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">Log In</button>
       </form>
+
+      <div style="margin:20px 0;display:flex;align-items:center;color:#444;">
+        <hr style="flex:1;border:0;border-top:1px solid #2a2a3e;"><span style="padding:0 10px;font-size:12px;">OR</span>
+        <hr style="flex:1;border:0;border-top:1px solid #2a2a3e;">
+      </div>
+
+      <a href="https://whop.com/oauth?client_id=app_W2HoBJo1SsbLan&redirect_uri=http://localhost:3000/api/auth/callback&response_type=code"
+        style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;box-sizing:border-box;padding:12px;border:1px solid #ff6243;border-radius:8px;background:transparent;color:#ff6243;text-decoration:none;font-size:15px;font-weight:600;font-family:Inter,system-ui,sans-serif;cursor:pointer;transition:all .2s;"
+        onmouseover="this.style.background='#ff6243';this.style.color='#fff'"
+        onmouseout="this.style.background='transparent';this.style.color='#ff6243'">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M14.659 13.916 24 3.1 19.868 21.6h-4.991l-1.92-7.962h-.056L10.982 21.6H5.99L2.836 7.641l4.57-.463 1.636 6.786h.056l1.921-7.962h3.91l1.865 7.914h.056Z" />
+        </svg>
+        Log in with Whop
+      </a>
+
       <p style="color:#888;font-size:13px;margin-top:16px;cursor:pointer;transition:color .2s;" id="authToggle"
         onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#888'">Need an account? Sign up</p>
     </div>
@@ -73,7 +90,7 @@
     const SUPABASE_URL = 'https://xujfzlsorjgrpmiayhhm.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_PVT4uba8fjTLWkJkLlQA8Q_78m2B89E';
     window.supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-    
+
     let isLogin = true;
     const gate = document.getElementById("authGate");
     const form = document.getElementById("authForm");
@@ -82,7 +99,7 @@
     const err = document.getElementById("authError");
     const toggle = document.getElementById("authToggle");
     const subBtn = document.getElementById("authSubmit");
-    
+
     // Check if session exists on load
     window.supabaseClient.auth.getSession().then(({ data: { session } }) => {
       if (session) {
@@ -113,10 +130,10 @@
       err.style.display = "none";
       subBtn.innerText = "Processing...";
       subBtn.style.opacity = "0.5";
-      
+
       const email = emailInput.value;
       const password = passwordInput.value;
-      
+
       try {
         let error = null;
         if (isLogin) {
@@ -126,10 +143,10 @@
           const res = await window.supabaseClient.auth.signUp({ email, password });
           error = res.error;
           if (!error && res.data?.user?.identities?.length === 0) {
-             throw new Error("User already exists. Please log in.");
+            throw new Error("User already exists. Please log in.");
           }
         }
-        
+
         if (error) throw error;
       } catch (e) {
         err.innerText = e.message;

@@ -1,0 +1,9 @@
+{
+    "name": "auction-mentor-academy",
+    "version": "1.0.0",
+    "description": "Auction Mentor Academy",
+    "dependencies": {
+        "@supabase/supabase-js": "^2.39.0",
+        "cookie": "^0.6.0"
+    }
+}
