@@ -32,18 +32,17 @@ export default async function handler(req, res) {
         const client_id = 'app_W2HoBJo1SsbLan';
         const client_secret = 'apik_IJ3tt6t7vEsVl_A2029476_C_3c8dbde1fa2dab98ac9dbb586ad9dccf834e19ef65498d3ac74e43c1c6c357';
 
-        const params = new URLSearchParams();
-        params.append('grant_type', 'authorization_code');
-        params.append('code', code);
-        params.append('redirect_uri', redirect_uri);
-        params.append('client_id', client_id);
-        params.append('client_secret', client_secret);
-        params.append('code_verifier', code_verifier);
-
         const tokenResponse = await fetch('https://api.whop.com/oauth/token', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: params
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                grant_type: 'authorization_code',
+                code: code,
+                redirect_uri: redirect_uri,
+                client_id: client_id,
+                client_secret: client_secret,
+                code_verifier: code_verifier
+            })
         });
 
         const tokenData = await tokenResponse.json();
