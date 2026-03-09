@@ -17,7 +17,7 @@ export default async function handler(req, res) {
 
     try {
         // 2. Ask Whop: "Who is this person?"
-        const tokenResponse = await fetch('https://api.whop.com/v2/oauth/token', {
+        const tokenResponse = await fetch('https://api.whop.com/oauth/token', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
