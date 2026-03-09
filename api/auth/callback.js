@@ -27,7 +27,7 @@ export default async function handler(req, res) {
         const redirect_uri = 'https://auction-mentor-academy.vercel.app/api/auth/callback';
 
         // Prevent typo from Vercel ENV by hardcoding the correct Client ID
-        const client_id = 'app_W2HoBJo1SsbLan';
+        const client_id = 'app_W2HoBJo1ssbLan';
         const client_secret = (process.env.WHOP_CLIENT_SECRET || '').trim();
 
         const params = new URLSearchParams();
@@ -57,8 +57,8 @@ export default async function handler(req, res) {
                             <b>DEBUG INFO:</b><br>
                             code: ${code}<br>
                             code_verifier: ${code_verifier}<br>
-                            client_id (from env): ${process.env.WHOP_CLIENT_ID || 'MISSING'}<br>
-                            client_secret (exists): ${process.env.WHOP_CLIENT_SECRET ? 'YES' : 'NO'}
+                            client_id (used): ${client_id}<br>
+                            client_secret (used starts with): ${client_secret.substring(0, 10)}...<br>
                         </div>
                         <br>
                         <a href="/" style="display: inline-block; padding: 10px 20px; background: #ff6243; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">Click Here to Start Over</a>
