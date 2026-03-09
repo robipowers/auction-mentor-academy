@@ -98,6 +98,9 @@ export default async function handler(req, res) {
         const { data: authData, error: authError } = await supabase.auth.admin.generateLink({
             type: 'magiclink',
             email: userEmail,
+            options: {
+                redirectTo: 'https://auction-mentor-academy.vercel.app'
+            }
         });
 
         if (authError || !authData.properties?.action_link) {
