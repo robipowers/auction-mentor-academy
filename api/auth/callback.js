@@ -1,6 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
 import * as cookie from 'cookie';
-import crypto from 'crypto';
 
 // Initialize Supabase with the hidden Service Role (Admin) key so we can force-login users
 const supabase = createClient(
@@ -28,9 +27,8 @@ export default async function handler(req, res) {
         // 2. Ask Whop: "Who is this person?"
         const redirect_uri = 'https://auction-mentor-academy.vercel.app/api/auth/callback';
 
-        // TEMPORARY: Hardcode both credentials to eliminate Vercel ENV issues
-        const client_id = 'app_W2HoBJo1SsbLan';
-        const client_secret = 'apik_IJ3tt6t7vEsVl_A2029476_C_3c8dbde1fa2dab98ac9dbb586ad9dccf834e19ef65498d3ac74e43c1c6c357';
+        const client_id = process.env.WHOP_CLIENT_ID;
+        const client_secret = process.env.WHOP_CLIENT_SECRET;
 
         const tokenResponse = await fetch('https://api.whop.com/oauth/token', {
             method: 'POST',
@@ -52,20 +50,9 @@ export default async function handler(req, res) {
                     <body style="font-family: Arial, sans-serif; text-align: center; margin-top: 50px;">
                         <h2 style="color: red;">Authentication Failed</h2>
                         <p>Whop rejected the login code. This usually happens if the code expired or the page was refreshed.</p>
-                        <p style="background: #eee; padding: 10px; max-width: 600px; margin: 0 auto; border-radius: 5px; font-family: monospace;">Error: ${JSON.stringify(tokenData)}</p>
-                        <hr style="max-width: 600px; margin: 20px auto;">
-                        <div style="text-align: left; max-width: 600px; margin: 0 auto; background: #222; color: #0f0; padding: 10px; font-family: monospace; border-radius: 5px; overflow-wrap: break-word;">
-                            <b>DEBUG INFO:</b><br>
-                            code: ${code}<br>
-                            code_verifier (from cookie): ${code_verifier}<br>
-                            computed challenge: ${crypto.createHash('sha256').update(code_verifier).digest('base64url')}<br>
-                            client_id: ${client_id}<br>
-                            client_secret starts: ${client_secret.substring(0, 10)}...<br>
-                            redirect_uri: ${redirect_uri}<br>
-                            raw cookies: ${req.headers.cookie || 'NONE'}<br>
-                        </div>
+                        <p>Please try again. If the problem persists, contact support.</p>
                         <br>
-                        <a href="/" style="display: inline-block; padding: 10px 20px; background: #ff6243; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">Click Here to Start Over</a>
+                        <a href="/" style="display: inline-block; padding: 10px 20px; background: #ff6243; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">Try Again</a>
                     </body>
                 </html>
             `);

@@ -22,8 +22,9 @@ export default function handler(req, res) {
 
     const redirectUri = 'https://auction-mentor-academy.vercel.app/api/auth/callback';
     const nonce = crypto.randomBytes(16).toString('hex');
+    const clientId = process.env.WHOP_CLIENT_ID;
     const authUrl = 'https://api.whop.com/oauth/authorize'
-        + '?client_id=app_W2HoBJo1SsbLan'
+        + '?client_id=' + clientId
         + '&redirect_uri=' + encodeURIComponent(redirectUri)
         + '&response_type=code'
         + '&scope=' + encodeURIComponent('openid profile email')
