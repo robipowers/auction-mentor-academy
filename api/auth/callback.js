@@ -34,8 +34,8 @@ export default async function handler(req, res) {
 
         const tokenResponse = await fetch('https://api.whop.com/oauth/token', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({
                 grant_type: 'authorization_code',
                 code: code,
                 redirect_uri: redirect_uri,
