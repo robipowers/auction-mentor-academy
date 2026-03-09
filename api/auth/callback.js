@@ -71,16 +71,19 @@ export default async function handler(req, res) {
             `);
         }
 
-        // 3. We have Whop access. Now let's fetch their Whop profile (email & ID)
-        const whopUserResponse = await fetch('https://api.whop.com/api/v2/me', {
+        // 3. Fetch user profile from Whop's OIDC userinfo endpoint
+        const whopUserResponse = await fetch('https://api.whop.com/oauth/userinfo', {
             headers: {
                 'Authorization': `Bearer ${tokenData.access_token}`
             }
         });
 
         const whopUser = await whopUserResponse.json();
-        if (!whopUser || !whopUser.email) {
-            return res.status(401).send('Could not retrieve Whop user profile');
+
+        // The userinfo endpoint returns email in the standard OIDC format
+        const userEmail = whopUser.email;
+        if (!userEmail) {
+            return res.status(401).send(`Could not retrieve Whop user email. Response: ${JSON.stringify(whopUser)}`);
         }
 
         /* 
@@ -94,7 +97,7 @@ export default async function handler(req, res) {
         // Because we use the Admin key, it bypasses email verification
         const { data: authData, error: authError } = await supabase.auth.admin.generateLink({
             type: 'magiclink',
-            email: whopUser.email,
+            email: userEmail,
         });
 
         if (authError || !authData.properties?.action_link) {
