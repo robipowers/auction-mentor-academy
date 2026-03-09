@@ -26,17 +26,18 @@ export default async function handler(req, res) {
         // 2. Ask Whop: "Who is this person?"
         const redirect_uri = 'https://auction-mentor-academy.vercel.app/api/auth/callback';
 
+        const params = new URLSearchParams();
+        params.append('client_id', process.env.WHOP_CLIENT_ID);
+        params.append('client_secret', process.env.WHOP_CLIENT_SECRET);
+        params.append('code', code);
+        params.append('code_verifier', code_verifier);
+        params.append('grant_type', 'authorization_code');
+        params.append('redirect_uri', redirect_uri);
+
         const tokenResponse = await fetch('https://api.whop.com/oauth/token', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                client_id: process.env.WHOP_CLIENT_ID,
-                client_secret: process.env.WHOP_CLIENT_SECRET,
-                code,
-                code_verifier,
-                grant_type: 'authorization_code',
-                redirect_uri
-            })
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: params
         });
 
         const tokenData = await tokenResponse.json();
