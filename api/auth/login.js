@@ -21,11 +21,13 @@ export default function handler(req, res) {
     res.setHeader('Set-Cookie', `cv=${codeVerifier}; Path=/; Max-Age=300; HttpOnly; Secure; SameSite=Lax`);
 
     const redirectUri = 'https://auction-mentor-academy.vercel.app/api/auth/callback';
+    const nonce = crypto.randomBytes(16).toString('hex');
     const authUrl = 'https://api.whop.com/oauth/authorize'
         + '?client_id=app_W2HoBJo1SsbLan'
         + '&redirect_uri=' + encodeURIComponent(redirectUri)
         + '&response_type=code'
         + '&scope=' + encodeURIComponent('openid profile email')
+        + '&nonce=' + nonce
         + '&code_challenge=' + codeChallenge
         + '&code_challenge_method=S256';
 
