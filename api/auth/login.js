@@ -20,7 +20,7 @@ export default function handler(req, res) {
     // Store code_verifier in a secure HttpOnly cookie
     res.setHeader('Set-Cookie', `cv=${codeVerifier}; Path=/; Max-Age=300; HttpOnly; Secure; SameSite=Lax`);
 
-    const redirectUri = 'https://auction-mentor-academy.vercel.app/api/auth/callback';
+    const redirectUri = 'https://academy.auctionmentor.io/api/auth/callback';
     const nonce = crypto.randomBytes(16).toString('hex');
     const clientId = process.env.WHOP_CLIENT_ID;
     const authUrl = 'https://api.whop.com/oauth/authorize'

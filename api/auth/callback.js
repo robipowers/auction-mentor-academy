@@ -25,7 +25,7 @@ export default async function handler(req, res) {
         }
 
         // 2. Ask Whop: "Who is this person?"
-        const redirect_uri = 'https://auction-mentor-academy.vercel.app/api/auth/callback';
+        const redirect_uri = 'https://academy.auctionmentor.io/api/auth/callback';
 
         const client_id = process.env.WHOP_CLIENT_ID;
         const client_secret = process.env.WHOP_CLIENT_SECRET;
@@ -86,7 +86,7 @@ export default async function handler(req, res) {
             type: 'magiclink',
             email: userEmail,
             options: {
-                redirectTo: 'https://auction-mentor-academy.vercel.app'
+                redirectTo: 'https://academy.auctionmentor.io'
             }
         });
 
@@ -98,7 +98,7 @@ export default async function handler(req, res) {
         let actionLink = authData.properties.action_link;
         actionLink = actionLink.replace(
             /redirect_to=http%3A%2F%2Flocalhost[^&]*/,
-            'redirect_to=' + encodeURIComponent('https://auction-mentor-academy.vercel.app')
+            'redirect_to=' + encodeURIComponent('https://academy.auctionmentor.io')
         );
 
         // 6. Redirect them to the magic link, which securely logs them in and drops them into the Academy
