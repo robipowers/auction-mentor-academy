@@ -38,13 +38,10 @@
 </head>
 
 <body>
-  <!-- Supabase -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <!-- Auth Gate -->
   <div id="authGate"
     style="position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:#0f0f1a;">
-    <div style="width:340px;text-align:center;font-family:Inter,system-ui,sans-serif;">
+    <div style="width:360px;text-align:center;font-family:Inter,system-ui,sans-serif;">
       <svg width="48" height="48" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"
         style="margin-bottom:24px;">
         <rect x="2" y="20" width="4" height="10" rx="1" fill="#fff" opacity="0.3" />
@@ -56,45 +53,143 @@
         <circle cx="22" cy="2" r="2" fill="#6ee7b7" />
       </svg>
       <h1 style="color:#fff;font-size:20px;font-weight:600;margin:0 0 6px;">Auction Mentor Academy</h1>
-      <p style="color:#888;font-size:14px;margin:0 0 28px;">Log in with your Whop account to access your course.</p>
 
-      <a href="/api/auth/login" id="whop-login-btn"
-        style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;box-sizing:border-box;padding:14px;border:none;border-radius:8px;background:#ff6243;color:#fff;text-decoration:none;font-size:16px;font-weight:600;font-family:Inter,system-ui,sans-serif;cursor:pointer;transition:opacity .2s;"
-        onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M14.659 13.916 24 3.1 19.868 21.6h-4.991l-1.92-7.962h-.056L10.982 21.6H5.99L2.836 7.641l4.57-.463 1.636 6.786h.056l1.921-7.962h3.91l1.865 7.914h.056Z" />
-        </svg>
-        Log in with Whop
-      </a>
+      <!-- Login Form -->
+      <div id="loginForm">
+        <p style="color:#888;font-size:14px;margin:0 0 24px;">Enter the email you subscribed with to receive a login
+          link.</p>
 
-      <p style="color:#555;font-size:12px;margin-top:20px;">You need an active Whop membership to access this course.
-      </p>
+        <input type="email" id="loginEmail" placeholder="your@email.com"
+          style="width:100%;box-sizing:border-box;padding:14px 16px;border:1px solid rgba(255,255,255,0.12);border-radius:10px;background:rgba(255,255,255,0.06);color:#fff;font-size:15px;font-family:Inter,system-ui,sans-serif;outline:none;margin-bottom:12px;transition:border-color .2s;"
+          onfocus="this.style.borderColor='#5FA074'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'" />
+
+        <div id="loginError" style="display:none;color:#f87171;font-size:13px;margin-bottom:12px;"></div>
+
+        <button id="loginBtn" onclick="requestMagicLink()"
+          style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;box-sizing:border-box;padding:14px;border:none;border-radius:10px;background:linear-gradient(135deg,#5FA074,#4A7C59);color:#fff;font-size:16px;font-weight:600;font-family:Inter,system-ui,sans-serif;cursor:pointer;transition:opacity .2s;"
+          onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2" />
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+          </svg>
+          Send Login Link
+        </button>
+
+        <p style="color:#555;font-size:12px;margin-top:20px;">You need an active subscription to access the Academy.</p>
+      </div>
+
+      <!-- Check Email State -->
+      <div id="checkEmail" style="display:none;">
+        <div style="font-size:48px;margin-bottom:16px;">📧</div>
+        <p style="color:#c8c8c8;font-size:15px;line-height:1.6;margin:0 0 8px;">
+          Check your email for a login link.
+        </p>
+        <p id="sentToEmail" style="color:#5FA074;font-size:14px;font-weight:600;margin:0 0 24px;"></p>
+        <p style="color:#888;font-size:13px;line-height:1.5;margin:0 0 24px;">
+          The link expires in 10 minutes and can only be used once.<br />Check your spam folder if you don't see it.
+        </p>
+        <button onclick="showLoginForm()"
+          style="padding:10px 24px;border:1px solid rgba(255,255,255,0.15);border-radius:8px;background:transparent;color:#888;font-size:14px;font-family:Inter,system-ui,sans-serif;cursor:pointer;">
+          Use a different email
+        </button>
+      </div>
+
+      <!-- Session Kicked State -->
+      <div id="sessionKicked" style="display:none;">
+        <div style="font-size:48px;margin-bottom:16px;">🔒</div>
+        <p id="kickedMessage" style="color:#c8c8c8;font-size:15px;line-height:1.6;margin:0 0 24px;"></p>
+        <button onclick="showLoginForm()"
+          style="padding:14px 32px;border:none;border-radius:10px;background:linear-gradient(135deg,#5FA074,#4A7C59);color:#fff;font-size:15px;font-weight:600;font-family:Inter,system-ui,sans-serif;cursor:pointer;">
+          Log In Again
+        </button>
+      </div>
     </div>
   </div>
   <script>
-    const SUPABASE_URL = 'https://xujfzlsorjgrpmiayhhm.supabase.co';
-    const SUPABASE_KEY = 'sb_publishable_PVT4uba8fjTLWkJkLlQA8Q_78m2B89E';
-    window.supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
     const gate = document.getElementById("authGate");
 
-    // Check if session exists on load
-    window.supabaseClient.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        gate.style.display = "none";
-        if (window.onAppReady) window.onAppReady();
-      }
-    });
+    // Check session on load
+    fetch("/api/auth/me")
+      .then(r => r.json())
+      .then(data => {
+        if (data.authenticated) {
+          gate.style.display = "none";
+          if (window.onAppReady) window.onAppReady();
+        } else if (data.reason === 'session_revoked') {
+          showKicked('You were logged out because your account was accessed from another device.');
+        } else if (data.reason === 'session_expired') {
+          showKicked('Your session has expired. Please log in again.');
+        } else if (data.reason === 'subscription_inactive') {
+          showKicked('Your subscription is no longer active. Please resubscribe at auctionmentor.io to regain access.');
+        }
+      })
+      .catch(() => { });
 
-    // Listen to auth changes
-    window.supabaseClient.auth.onAuthStateChange((event, session) => {
-      if (session) {
-        gate.style.display = "none";
-        if (window.onAppReady) window.onAppReady();
-      } else {
-        gate.style.display = "flex";
+    function requestMagicLink() {
+      const email = document.getElementById("loginEmail").value.trim();
+      const errorEl = document.getElementById("loginError");
+      const btn = document.getElementById("loginBtn");
+
+      if (!email || !email.includes("@")) {
+        errorEl.textContent = "Please enter a valid email address.";
+        errorEl.style.display = "block";
+        return;
       }
+
+      errorEl.style.display = "none";
+      btn.disabled = true;
+      btn.textContent = "Sending...";
+      btn.style.opacity = "0.6";
+
+      fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      })
+        .then(r => r.json())
+        .then(data => {
+          if (data.error) {
+            errorEl.textContent = data.error;
+            errorEl.style.display = "block";
+            btn.disabled = false;
+            btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> Send Login Link';
+            btn.style.opacity = "1";
+          } else {
+            document.getElementById("sentToEmail").textContent = email;
+            document.getElementById("loginForm").style.display = "none";
+            document.getElementById("checkEmail").style.display = "block";
+          }
+        })
+        .catch(() => {
+          errorEl.textContent = "Something went wrong. Please try again.";
+          errorEl.style.display = "block";
+          btn.disabled = false;
+          btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> Send Login Link';
+          btn.style.opacity = "1";
+        });
+    }
+
+    function showLoginForm() {
+      document.getElementById("loginForm").style.display = "block";
+      document.getElementById("checkEmail").style.display = "none";
+      document.getElementById("sessionKicked").style.display = "none";
+      const btn = document.getElementById("loginBtn");
+      btn.disabled = false;
+      btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> Send Login Link';
+      btn.style.opacity = "1";
+    }
+
+    function showKicked(message) {
+      document.getElementById("loginForm").style.display = "none";
+      document.getElementById("checkEmail").style.display = "none";
+      document.getElementById("sessionKicked").style.display = "block";
+      document.getElementById("kickedMessage").textContent = message;
+    }
+
+    // Allow Enter key to submit
+    document.getElementById("loginEmail").addEventListener("keypress", function (e) {
+      if (e.key === "Enter") requestMagicLink();
     });
   </script>
 
