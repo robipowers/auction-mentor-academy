@@ -128,6 +128,9 @@
       case "rules":
         renderRulesView(app);
         break;
+      case "glossary":
+        renderGlossaryView(app);
+        break;
       default:
         renderDashboard(app);
     }
@@ -158,6 +161,7 @@
       '<div class="progress-bar-fill" style="width:' + pct + '%"></div></div>' +
       '</nav>' +
       '<div class="topbar-actions">' +
+      '<a href="#glossary" class="nav-link" aria-label="AMT Glossary">Glossary</a>' +
       '<a href="#rules" class="nav-link" aria-label="Trading Rules">Rules</a>' +
       '<button id="theme-toggle" class="btn-icon" aria-label="Switch to light mode" style="margin-right:12px;">' +
       (state.theme === "dark" ? ICONS.sun : ICONS.moon) + '</button>' +
@@ -421,11 +425,11 @@
     var key = sectionId + "-" + chapterIdx;
     if (!state.completedChapters[key]) {
       state.completedChapters[key] = true;
-      if (window.supabaseClient && state.userId) {
-        window.supabaseClient.from("user_progress").insert([
-          { user_id: state.userId, section_id: sectionId, chapter_idx: chapterIdx }
-        ]).then(function () { });
-      }
+      fetch('/api/progress', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'chapter', sectionId: sectionId, chapterIdx: chapterIdx })
+      }).catch(function () { });
     }
   }
 
@@ -675,11 +679,11 @@
       state.completedSections[state.currentQuiz] = true;
     }
 
-    if (window.supabaseClient && state.userId) {
-      window.supabaseClient.from("quiz_scores").upsert([
-        { user_id: state.userId, section_id: state.currentQuiz, score: score, passed: passed }
-      ], { onConflict: 'user_id, section_id' }).then(function () { });
-    }
+    fetch('/api/progress', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type: 'quiz', sectionId: state.currentQuiz, score: score, passed: passed })
+    }).catch(function () { });
 
     var section = getSection(state.currentQuiz);
     var nextSection = getSection(Number(state.currentQuiz) + 1);
@@ -772,6 +776,111 @@
     });
   }
 
+  // ── Render: Glossary View ──
+  function renderGlossaryView(app) {
+    var html = renderTopBar() +
+      '<div id="reading-progress" class="reading-progress" style="width:0%"></div>' +
+      '<main id="main-content" class="glossary-view view-enter">' +
+      '<h1>AMT Glossary</h1>' +
+      '<p class="glossary-intro">Key terms and concepts from Auction Market Theory. Use this as a quick reference while studying the curriculum.</p>' +
+      '<div class="glossary-search-wrapper">' +
+      '<input type="text" id="glossary-search" class="glossary-search" placeholder="Search terms..." autocomplete="off" />' +
+      '</div>' +
+      '<div class="glossary-alpha-bar" id="glossary-alpha"></div>' +
+      '<div class="glossary-list" id="glossary-list">' +
+      '<div class="glossary-loading">Loading glossary...</div>' +
+      '</div>' +
+      '</main>' + renderFooter();
+
+    app.innerHTML = html;
+    bindTopBarEvents();
+    loadGlossaryTerms();
+  }
+
+  function loadGlossaryTerms() {
+    fetch('/api/glossary')
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (data.error || !data.terms) {
+          document.getElementById('glossary-list').innerHTML = '<div class="glossary-error">Failed to load glossary. Please refresh the page.</div>';
+          return;
+        }
+        renderGlossaryTerms(data.terms);
+      })
+      .catch(function () {
+        document.getElementById('glossary-list').innerHTML = '<div class="glossary-error">Failed to load glossary. Please refresh the page.</div>';
+      });
+  }
+
+  function renderGlossaryTerms(terms) {
+    var grouped = {};
+    var letters = [];
+
+    terms.forEach(function (t) {
+      var letter = t.term.charAt(0).toUpperCase();
+      if (!grouped[letter]) {
+        grouped[letter] = [];
+        letters.push(letter);
+      }
+      grouped[letter].push(t);
+    });
+
+    letters.sort();
+
+    var alphaHtml = letters.map(function (l) {
+      return '<a href="#glossary-letter-' + l + '" class="glossary-alpha-link">' + l + '</a>';
+    }).join('');
+    document.getElementById('glossary-alpha').innerHTML = alphaHtml;
+
+    var listHtml = '';
+    letters.forEach(function (letter) {
+      listHtml += '<div class="glossary-letter-group" id="glossary-letter-' + letter + '">' +
+        '<div class="glossary-letter-header">' + letter + '</div>';
+
+      grouped[letter].forEach(function (term) {
+        listHtml += '<div class="glossary-term" data-term="' + term.term.toLowerCase() + '">' +
+          '<div class="glossary-term-name">' + term.term + '</div>' +
+          '<div class="glossary-term-def">' + term.definition + '</div>' +
+          '</div>';
+      });
+
+      listHtml += '</div>';
+    });
+
+    document.getElementById('glossary-list').innerHTML = listHtml;
+
+    var searchInput = document.getElementById('glossary-search');
+    searchInput.addEventListener('input', function () {
+      var q = this.value.toLowerCase().trim();
+      var termEls = document.querySelectorAll('.glossary-term');
+      var groupEls = document.querySelectorAll('.glossary-letter-group');
+
+      if (!q) {
+        termEls.forEach(function (el) { el.style.display = ''; });
+        groupEls.forEach(function (el) { el.style.display = ''; });
+        return;
+      }
+
+      var visibleLetters = {};
+      termEls.forEach(function (el) {
+        var termName = el.getAttribute('data-term');
+        var termDef = el.querySelector('.glossary-term-def').textContent.toLowerCase();
+        if (termName.indexOf(q) !== -1 || termDef.indexOf(q) !== -1) {
+          el.style.display = '';
+          var letter = termName.charAt(0).toUpperCase();
+          visibleLetters[letter] = true;
+        } else {
+          el.style.display = 'none';
+        }
+      });
+
+      groupEls.forEach(function (el) {
+        var letter = el.id.replace('glossary-letter-', '');
+        el.style.display = visibleLetters[letter] ? '' : 'none';
+      });
+    });
+  }
+
   // ── Bind Top Bar Events ──
   function bindTopBarEvents() {
     var themeBtn = $("#theme-toggle");
@@ -781,38 +890,36 @@
     var signoutBtn = $("#auth-signout");
     if (signoutBtn) {
       signoutBtn.addEventListener("click", function () {
-        if (window.supabaseClient) {
-          window.supabaseClient.auth.signOut().then(function () {
-            window.location.reload();
-          });
-        }
+        fetch('/api/auth/logout', { method: 'POST' })
+          .then(function () { window.location.reload(); })
+          .catch(function () { window.location.reload(); });
       });
     }
   }
 
   // ── Init ──
   async function loadProgressFromDB() {
-    if (!window.supabaseClient) return;
-    var res = await window.supabaseClient.auth.getUser();
-    var user = res.data ? res.data.user : null;
-    if (!user) return;
-    state.userId = user.id;
+    try {
+      var res = await fetch('/api/progress');
+      if (!res.ok) return;
+      var data = await res.json();
 
-    var chaptersRes = await window.supabaseClient.from("user_progress").select("section_id, chapter_idx");
-    if (chaptersRes.data) {
-      chaptersRes.data.forEach(function (c) {
-        state.completedChapters[c.section_id + "-" + c.chapter_idx] = true;
-      });
-    }
+      if (data.chapters) {
+        data.chapters.forEach(function (c) {
+          state.completedChapters[c.section_id + "-" + c.chapter_idx] = true;
+        });
+      }
 
-    var scoresRes = await window.supabaseClient.from("quiz_scores").select("section_id, score, passed");
-    if (scoresRes.data) {
-      scoresRes.data.forEach(function (s) {
-        state.quizScores[s.section_id] = s.score;
-        if (s.passed) {
-          state.completedSections[s.section_id] = true;
-        }
-      });
+      if (data.scores) {
+        data.scores.forEach(function (s) {
+          state.quizScores[s.section_id] = s.score;
+          if (s.passed) {
+            state.completedSections[s.section_id] = true;
+          }
+        });
+      }
+    } catch (e) {
+      // Progress load failed, continue with empty state
     }
   }
 
