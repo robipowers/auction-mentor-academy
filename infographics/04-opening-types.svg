@@ -1,0 +1,390 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+  <defs>
+    <style>
+      .title { font-family: 'Inter', 'Helvetica Neue', sans-serif; font-size: 44px; font-weight: 700; fill: #e8e8e8; }
+      .subtitle { font-family: 'Inter', 'Helvetica Neue', sans-serif; font-size: 20px; font-weight: 400; fill: #888888; }
+      .panel-title { font-family: 'Inter', 'Helvetica Neue', sans-serif; font-size: 24px; font-weight: 700; fill: #00d4aa; }
+      .panel-subtitle { font-family: 'Inter', 'Helvetica Neue', sans-serif; font-size: 14px; font-weight: 400; fill: #888888; }
+      .label { font-family: 'Inter', 'Helvetica Neue', sans-serif; font-size: 14px; font-weight: 600; fill: #e8e8e8; }
+      .stat { font-family: 'JetBrains Mono', monospace; font-size: 13px; fill: #00d4aa; }
+      .body { font-family: 'Inter', 'Helvetica Neue', sans-serif; font-size: 13px; font-weight: 400; fill: #e8e8e8; }
+      .phase { font-family: 'Inter', 'Helvetica Neue', sans-serif; font-size: 11px; font-weight: 500; fill: #888888; }
+      .rule { font-family: 'Inter', 'Helvetica Neue', sans-serif; font-size: 13px; font-weight: 600; fill: #00d4aa; }
+      .time { font-family: 'JetBrains Mono', monospace; font-size: 10px; fill: #666666; }
+      .footer { font-family: 'Inter', 'Helvetica Neue', sans-serif; font-size: 16px; font-weight: 500; fill: #666666; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1080" height="1920" fill="#1a1a1a"/>
+
+  <!-- Title -->
+  <text x="540" y="90" text-anchor="middle" class="title">The Four Opening Types</text>
+  <text x="540" y="125" text-anchor="middle" class="subtitle">Identify by 9:50 AM to frame your entire session</text>
+
+  <!-- PANEL 1: Open Drive -->
+  <g transform="translate(60, 170)">
+    <rect width="460" height="380" rx="12" fill="#242424"/>
+
+    <!-- Header -->
+    <text x="230" y="40" text-anchor="middle" class="panel-title">Open Drive (OD)</text>
+    <text x="230" y="62" text-anchor="middle" class="panel-subtitle">Immediate Directional Commitment</text>
+
+    <!-- Price Chart Visualization -->
+    <g transform="translate(30, 85)">
+      <!-- Time axis -->
+      <line x1="0" y1="140" x2="190" y2="140" stroke="#444444" stroke-width="1"/>
+      <text x="0" y="155" class="time">9:30</text>
+      <text x="90" y="155" class="time">9:45</text>
+      <text x="175" y="155" class="time">10:00</text>
+
+      <!-- Price line - continuous upward move -->
+      <path d="M 10 130 L 40 110 L 70 95 L 100 75 L 130 55 L 160 35 L 180 25"
+            stroke="#00d4aa" stroke-width="3" fill="none"/>
+
+      <!-- Open marker -->
+      <circle cx="10" cy="130" r="4" fill="#00d4aa"/>
+      <text x="20" y="135" class="phase">Open</text>
+
+      <!-- Arrow showing direction -->
+      <polygon points="180,20 190,25 180,30" fill="#00d4aa"/>
+    </g>
+
+    <!-- Stats -->
+    <g transform="translate(230, 90)">
+      <rect x="0" y="0" width="200" height="100" rx="6" fill="#1e1e1e"/>
+      <text x="100" y="25" text-anchor="middle" class="label">Probabilities</text>
+      <text x="100" y="50" text-anchor="middle" class="stat">75-85% Trend Day</text>
+      <text x="100" y="72" text-anchor="middle" class="stat">85%+ Single Break</text>
+    </g>
+
+    <!-- Characteristics -->
+    <g transform="translate(30, 250)">
+      <text x="0" y="0" class="label">Characteristics:</text>
+      <text x="0" y="22" class="body">• Unidirectional from open</text>
+      <text x="0" y="42" class="body">• No retrace back to open</text>
+      <text x="0" y="62" class="body">• Sustained delta in direction</text>
+      <text x="0" y="82" class="body">• Each bar closes near extreme</text>
+    </g>
+
+    <!-- Rule -->
+    <g transform="translate(30, 345)">
+      <rect x="0" y="0" width="400" height="25" rx="4" fill="#00d4aa" opacity="0.15"/>
+      <text x="200" y="17" text-anchor="middle" class="rule">Do not fade Open Drives</text>
+    </g>
+  </g>
+
+  <!-- PANEL 2: Open Test Drive -->
+  <g transform="translate(560, 170)">
+    <rect width="460" height="380" rx="12" fill="#242424"/>
+
+    <!-- Header -->
+    <text x="230" y="40" text-anchor="middle" class="panel-title">Open Test Drive (OTD)</text>
+    <text x="230" y="62" text-anchor="middle" class="panel-subtitle">The Liquidity Grab Setup</text>
+
+    <!-- Price Chart Visualization -->
+    <g transform="translate(30, 85)">
+      <!-- Time axis -->
+      <line x1="0" y1="140" x2="190" y2="140" stroke="#444444" stroke-width="1"/>
+      <text x="0" y="155" class="time">9:30</text>
+      <text x="55" y="155" class="time">9:40</text>
+      <text x="115" y="155" class="time">10:00</text>
+      <text x="170" y="155" class="time">10:30</text>
+
+      <!-- Phase 1: Initial probe up -->
+      <path d="M 10 90 L 30 70 L 50 60" stroke="#888888" stroke-width="2" fill="none"/>
+
+      <!-- Phase 2: Test down -->
+      <path d="M 50 60 L 70 85 L 90 110 L 110 120" stroke="#888888" stroke-width="2" fill="none"/>
+
+      <!-- Phase 3: Drive in original direction -->
+      <path d="M 110 120 L 130 95 L 150 60 L 170 35 L 185 20" stroke="#00d4aa" stroke-width="3" fill="none"/>
+
+      <!-- Test level marker -->
+      <line x1="100" y1="120" x2="130" y2="120" stroke="#00d4aa" stroke-width="1" stroke-dasharray="4,2"/>
+      <text x="135" y="125" class="phase" fill="#00d4aa">Test</text>
+
+      <!-- Open marker -->
+      <circle cx="10" cy="90" r="4" fill="#888888"/>
+    </g>
+
+    <!-- Stats -->
+    <g transform="translate(230, 90)">
+      <rect x="0" y="0" width="200" height="100" rx="6" fill="#1e1e1e"/>
+      <text x="100" y="25" text-anchor="middle" class="label">Probabilities</text>
+      <text x="100" y="50" text-anchor="middle" class="stat">70-75% Trend Day</text>
+      <text x="100" y="72" text-anchor="middle" class="stat">80-85% Test Hold</text>
+    </g>
+
+    <!-- Phases -->
+    <g transform="translate(30, 250)">
+      <text x="0" y="0" class="label">Three Phases:</text>
+      <text x="0" y="22" class="body">1. Initial probe (9:30-9:40)</text>
+      <text x="0" y="42" class="body">2. Test: liquidity grab (9:40-10:00)</text>
+      <text x="0" y="62" class="body">3. Drive in original direction (10:00+)</text>
+    </g>
+
+    <!-- Rule -->
+    <g transform="translate(30, 320)">
+      <rect x="0" y="0" width="400" height="50" rx="4" fill="#00d4aa" opacity="0.15"/>
+      <text x="200" y="18" text-anchor="middle" class="rule">Best entry: at the test level itself</text>
+      <text x="200" y="38" text-anchor="middle" class="body" fill="#888888">Stop just beyond the test</text>
+    </g>
+  </g>
+
+  <!-- PANEL 3: Open Rejection Reverse -->
+  <g transform="translate(60, 580)">
+    <rect width="460" height="380" rx="12" fill="#242424"/>
+
+    <!-- Header -->
+    <text x="230" y="40" text-anchor="middle" class="panel-title">Open Rejection Reverse (ORR)</text>
+    <text x="230" y="62" text-anchor="middle" class="panel-subtitle">The Failed Trend Setup</text>
+
+    <!-- Price Chart Visualization -->
+    <g transform="translate(30, 85)">
+      <!-- Time axis -->
+      <line x1="0" y1="140" x2="190" y2="140" stroke="#444444" stroke-width="1"/>
+      <text x="0" y="155" class="time">9:30</text>
+      <text x="55" y="155" class="time">9:40</text>
+      <text x="115" y="155" class="time">10:00</text>
+      <text x="170" y="155" class="time">10:30</text>
+
+      <!-- Initial drive up (looks like OD at first) -->
+      <path d="M 10 90 L 30 65 L 50 45 L 65 35" stroke="#888888" stroke-width="2" fill="none"/>
+
+      <!-- Rejection point -->
+      <circle cx="65" cy="35" r="5" fill="none" stroke="#e8e8e8" stroke-width="2"/>
+      <text x="75" y="30" class="phase" fill="#e8e8e8">Rejection</text>
+
+      <!-- Key resistance line -->
+      <line x1="55" y1="35" x2="100" y2="35" stroke="#e8e8e8" stroke-width="1" stroke-dasharray="4,2"/>
+
+      <!-- Sharp reversal and trend opposite direction -->
+      <path d="M 65 35 L 80 55 L 100 80 L 130 105 L 160 120 L 185 130" stroke="#00d4aa" stroke-width="3" fill="none"/>
+
+      <!-- Arrow showing direction -->
+      <polygon points="185,125 190,130 185,135" fill="#00d4aa"/>
+
+      <!-- Open marker -->
+      <circle cx="10" cy="90" r="4" fill="#888888"/>
+    </g>
+
+    <!-- Stats -->
+    <g transform="translate(230, 90)">
+      <rect x="0" y="0" width="200" height="100" rx="6" fill="#1e1e1e"/>
+      <text x="100" y="25" text-anchor="middle" class="label">Probabilities</text>
+      <text x="100" y="50" text-anchor="middle" class="stat">75%+ Trend Opposite</text>
+      <text x="100" y="72" text-anchor="middle" class="stat">10-15% of Sessions</text>
+    </g>
+
+    <!-- Characteristics -->
+    <g transform="translate(30, 250)">
+      <text x="0" y="0" class="label">Characteristics:</text>
+      <text x="0" y="22" class="body">• Begins like an Open Drive</text>
+      <text x="0" y="42" class="body">• Strong rejection at key level</text>
+      <text x="0" y="62" class="body">• Reverses to trend OPPOSITE</text>
+      <text x="0" y="82" class="body">• Failed drive fuels counter-move</text>
+    </g>
+
+    <!-- Rule -->
+    <g transform="translate(30, 345)">
+      <rect x="0" y="0" width="400" height="25" rx="4" fill="#00d4aa" opacity="0.15"/>
+      <text x="200" y="17" text-anchor="middle" class="rule">Trade the reversal direction</text>
+    </g>
+  </g>
+
+  <!-- PANEL 4: Open Auction -->
+  <g transform="translate(560, 580)">
+    <rect width="460" height="380" rx="12" fill="#242424"/>
+
+    <!-- Header -->
+    <text x="230" y="40" text-anchor="middle" class="panel-title">Open Auction (OA)</text>
+    <text x="230" y="62" text-anchor="middle" class="panel-subtitle">Balance and Rotation</text>
+
+    <!-- Price Chart Visualization -->
+    <g transform="translate(30, 85)">
+      <!-- Time axis -->
+      <line x1="0" y1="140" x2="190" y2="140" stroke="#444444" stroke-width="1"/>
+      <text x="0" y="155" class="time">9:30</text>
+      <text x="55" y="155" class="time">9:45</text>
+      <text x="115" y="155" class="time">10:00</text>
+      <text x="170" y="155" class="time">10:30</text>
+
+      <!-- Oscillating price action -->
+      <path d="M 10 80 L 30 55 L 50 70 L 70 95 L 90 70 L 110 55 L 130 75 L 150 90 L 170 65 L 185 80"
+            stroke="#888888" stroke-width="2" fill="none"/>
+
+      <!-- Balance zone markers -->
+      <line x1="0" y1="55" x2="190" y2="55" stroke="#444444" stroke-width="1" stroke-dasharray="4,2"/>
+      <line x1="0" y1="95" x2="190" y2="95" stroke="#444444" stroke-width="1" stroke-dasharray="4,2"/>
+
+      <!-- Open marker -->
+      <circle cx="10" cy="80" r="4" fill="#888888"/>
+      <text x="20" y="75" class="phase">Open</text>
+    </g>
+
+    <!-- Stats -->
+    <g transform="translate(230, 90)">
+      <rect x="0" y="0" width="200" height="100" rx="6" fill="#1e1e1e"/>
+      <text x="100" y="25" text-anchor="middle" class="label">Probabilities</text>
+      <text x="100" y="50" text-anchor="middle" class="stat">20-25% of Sessions</text>
+      <text x="100" y="72" text-anchor="middle" class="stat">55-60% Range Win Rate</text>
+    </g>
+
+    <!-- Characteristics -->
+    <g transform="translate(30, 250)">
+      <text x="0" y="0" class="label">Characteristics:</text>
+      <text x="0" y="22" class="body">• Balanced probes both directions</text>
+      <text x="0" y="42" class="body">• No sustained commitment</text>
+      <text x="0" y="62" class="body">• Oscillates around the open</text>
+      <text x="0" y="82" class="body">• Late breakout 40-50% of OA days</text>
+    </g>
+
+    <!-- Rule -->
+    <g transform="translate(30, 345)">
+      <rect x="0" y="0" width="400" height="25" rx="4" fill="#00d4aa" opacity="0.15"/>
+      <text x="200" y="17" text-anchor="middle" class="rule">Plan range trades or wait for late breakout</text>
+    </g>
+  </g>
+
+  <!-- Identification Flowchart -->
+  <g transform="translate(60, 990)">
+    <rect width="960" height="320" rx="12" fill="#242424"/>
+    <text x="480" y="40" text-anchor="middle" class="panel-title">Opening Type Identification (by 9:50 AM)</text>
+
+    <!-- Flowchart -->
+    <g transform="translate(40, 70)">
+      <!-- Question 1 -->
+      <rect x="0" y="0" width="400" height="45" rx="6" fill="#2a2a2a" stroke="#00d4aa" stroke-width="2"/>
+      <text x="200" y="28" text-anchor="middle" class="body">Is price moving unidirectionally with no pullback?</text>
+
+      <line x1="400" y1="22" x2="450" y2="22" stroke="#00d4aa" stroke-width="2"/>
+      <text x="425" y="15" class="stat" font-size="11">YES</text>
+
+      <!-- OD Result -->
+      <rect x="450" y="0" width="120" height="45" rx="6" fill="#00d4aa"/>
+      <text x="510" y="28" text-anchor="middle" class="body" fill="#1a1a1a" font-weight="700">Open Drive</text>
+
+      <!-- Arrow down for NO -->
+      <line x1="200" y1="45" x2="200" y2="70" stroke="#444444" stroke-width="1.5"/>
+      <text x="215" y="60" class="phase">NO</text>
+
+      <!-- Question 2 -->
+      <rect x="0" y="70" width="400" height="45" rx="6" fill="#2a2a2a" stroke="#444444" stroke-width="1"/>
+      <text x="200" y="85" text-anchor="middle" class="body">Has price probed, reversed to test a level,</text>
+      <text x="200" y="102" text-anchor="middle" class="body">then driven in original direction?</text>
+
+      <line x1="400" y1="92" x2="450" y2="92" stroke="#00d4aa" stroke-width="2"/>
+      <text x="425" y="85" class="stat" font-size="11">YES</text>
+
+      <!-- OTD Result -->
+      <rect x="450" y="70" width="120" height="45" rx="6" fill="#00d4aa"/>
+      <text x="510" y="98" text-anchor="middle" class="body" fill="#1a1a1a" font-weight="700">OTD</text>
+
+      <!-- Arrow down for NO -->
+      <line x1="200" y1="115" x2="200" y2="140" stroke="#444444" stroke-width="1.5"/>
+      <text x="215" y="130" class="phase">NO</text>
+
+      <!-- Question 3 -->
+      <rect x="0" y="140" width="400" height="45" rx="6" fill="#2a2a2a" stroke="#444444" stroke-width="1"/>
+      <text x="200" y="158" text-anchor="middle" class="body">Has price driven one direction, sharply rejected,</text>
+      <text x="200" y="175" text-anchor="middle" class="body">and reversed?</text>
+
+      <line x1="400" y1="162" x2="450" y2="162" stroke="#00d4aa" stroke-width="2"/>
+      <text x="425" y="155" class="stat" font-size="11">YES</text>
+
+      <!-- ORR Result -->
+      <rect x="450" y="140" width="120" height="45" rx="6" fill="#00d4aa"/>
+      <text x="510" y="168" text-anchor="middle" class="body" fill="#1a1a1a" font-weight="700">ORR</text>
+
+      <!-- Arrow down for None -->
+      <line x1="200" y1="185" x2="200" y2="210" stroke="#444444" stroke-width="1.5"/>
+      <text x="215" y="200" class="phase">NO</text>
+
+      <!-- Default: Open Auction -->
+      <rect x="100" y="210" width="200" height="40" rx="6" fill="#2a2a2a" stroke="#444444" stroke-width="1"/>
+      <text x="200" y="235" text-anchor="middle" class="body">Balanced rotation?</text>
+
+      <line x1="300" y1="230" x2="450" y2="230" stroke="#00d4aa" stroke-width="2"/>
+
+      <!-- OA Result -->
+      <rect x="450" y="210" width="120" height="40" rx="6" fill="#00d4aa"/>
+      <text x="510" y="235" text-anchor="middle" class="body" fill="#1a1a1a" font-weight="700">Open Auction</text>
+
+      <!-- Strategy column -->
+      <g transform="translate(600, 0)">
+        <text x="120" y="-10" text-anchor="middle" class="label">Strategy</text>
+        <rect x="0" y="0" width="260" height="45" rx="6" fill="#1e1e1e"/>
+        <text x="130" y="28" text-anchor="middle" class="body">Trend follow, let winners run</text>
+
+        <rect x="0" y="70" width="260" height="45" rx="6" fill="#1e1e1e"/>
+        <text x="130" y="98" text-anchor="middle" class="body">Enter at test, follow the drive</text>
+
+        <rect x="0" y="140" width="260" height="45" rx="6" fill="#1e1e1e"/>
+        <text x="130" y="168" text-anchor="middle" class="body">Trade the reversal direction</text>
+
+        <rect x="0" y="210" width="260" height="40" rx="6" fill="#1e1e1e"/>
+        <text x="130" y="235" text-anchor="middle" class="body">Range trades or wait</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Probability Summary -->
+  <g transform="translate(60, 1340)">
+    <rect width="960" height="200" rx="12" fill="#242424"/>
+    <text x="480" y="40" text-anchor="middle" class="panel-title">Day Type Probabilities by Opening Type</text>
+
+    <!-- Table -->
+    <g transform="translate(80, 70)">
+      <!-- Headers -->
+      <text x="0" y="0" class="label">Opening Type</text>
+      <text x="250" y="0" text-anchor="middle" class="label">Trend Day</text>
+      <text x="420" y="0" text-anchor="middle" class="label">Single Break</text>
+      <text x="600" y="0" text-anchor="middle" class="label">Best Strategy</text>
+
+      <line x1="0" y1="15" x2="800" y2="15" stroke="#444444" stroke-width="1"/>
+
+      <!-- OD Row -->
+      <text x="0" y="45" class="stat">Open Drive</text>
+      <text x="250" y="45" text-anchor="middle" class="body">75-85%</text>
+      <text x="420" y="45" text-anchor="middle" class="body">85%+</text>
+      <text x="600" y="45" text-anchor="middle" class="body">Follow breakout</text>
+
+      <!-- OTD Row -->
+      <text x="0" y="75" class="stat">Open Test Drive</text>
+      <text x="250" y="75" text-anchor="middle" class="body">70-75%</text>
+      <text x="420" y="75" text-anchor="middle" class="body">75-80%</text>
+      <text x="600" y="75" text-anchor="middle" class="body">Enter at test level</text>
+
+      <!-- ORR Row -->
+      <text x="0" y="105" class="stat">Open Rejection Reverse</text>
+      <text x="250" y="105" text-anchor="middle" class="body">75%+ (opposite)</text>
+      <text x="420" y="105" text-anchor="middle" class="body">75-80%</text>
+      <text x="600" y="105" text-anchor="middle" class="body">Trade reversal</text>
+
+      <!-- OA Row -->
+      <text x="0" y="135" class="stat">Open Auction</text>
+      <text x="250" y="135" text-anchor="middle" class="body">Low</text>
+      <text x="420" y="135" text-anchor="middle" class="body">40-50% late</text>
+      <text x="600" y="135" text-anchor="middle" class="body">Range or wait</text>
+    </g>
+  </g>
+
+  <!-- Key Insight -->
+  <g transform="translate(60, 1570)">
+    <rect width="960" height="120" rx="12" fill="#1e1e1e"/>
+    <text x="480" y="45" text-anchor="middle" class="rule" font-size="18">Critical Rule</text>
+    <text x="480" y="80" text-anchor="middle" class="body" font-size="15">Identifying the opening type by 9:50 AM provides one of the highest-leverage</text>
+    <text x="480" y="102" text-anchor="middle" class="body" font-size="15">strategy inputs of the entire session. Most retail traders haven't even identified a setup.</text>
+  </g>
+
+  <!-- Timing Reference -->
+  <g transform="translate(60, 1710)">
+    <rect width="960" height="60" rx="8" fill="#00d4aa" opacity="0.1"/>
+    <text x="480" y="38" text-anchor="middle" class="body" font-size="15" fill="#00d4aa">By 9:45 AM: Confirm OD (no pullback) • By 9:50 AM: Classify all other types • By 10:30 AM: Confirm day type</text>
+  </g>
+
+  <!-- Footer -->
+  <rect x="0" y="1860" width="1080" height="60" fill="#141414"/>
+  <text x="540" y="1898" text-anchor="middle" class="footer">Auction Mentor | academy.auctionmentor.io</text>
+</svg>

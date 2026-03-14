@@ -1,0 +1,390 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+  <defs>
+    <style>
+      .title { font-family: 'Inter', 'Helvetica Neue', sans-serif; font-size: 44px; font-weight: 700; fill: #e8e8e8; }
+      .subtitle { font-family: 'Inter', 'Helvetica Neue', sans-serif; font-size: 20px; font-weight: 400; fill: #888888; }
+      .section-title { font-family: 'Inter', 'Helvetica Neue', sans-serif; font-size: 22px; font-weight: 700; fill: #00d4aa; }
+      .label { font-family: 'Inter', 'Helvetica Neue', sans-serif; font-size: 14px; font-weight: 600; fill: #e8e8e8; }
+      .sublabel { font-family: 'Inter', 'Helvetica Neue', sans-serif; font-size: 12px; font-weight: 400; fill: #888888; }
+      .price { font-family: 'JetBrains Mono', monospace; font-size: 11px; fill: #888888; }
+      .volume { font-family: 'JetBrains Mono', monospace; font-size: 11px; fill: #e8e8e8; }
+      .volume-bid { font-family: 'JetBrains Mono', monospace; font-size: 11px; fill: #ff6b6b; }
+      .volume-ask { font-family: 'JetBrains Mono', monospace; font-size: 11px; fill: #00d4aa; }
+      .delta-pos { font-family: 'JetBrains Mono', monospace; font-size: 11px; fill: #00d4aa; }
+      .delta-neg { font-family: 'JetBrains Mono', monospace; font-size: 11px; fill: #ff6b6b; }
+      .body { font-family: 'Inter', 'Helvetica Neue', sans-serif; font-size: 13px; font-weight: 400; fill: #e8e8e8; }
+      .callout { font-family: 'Inter', 'Helvetica Neue', sans-serif; font-size: 12px; font-weight: 500; fill: #00d4aa; }
+      .stat { font-family: 'JetBrains Mono', monospace; font-size: 12px; fill: #00d4aa; }
+      .footer { font-family: 'Inter', 'Helvetica Neue', sans-serif; font-size: 16px; font-weight: 500; fill: #666666; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1080" height="1920" fill="#1a1a1a"/>
+
+  <!-- Title -->
+  <text x="540" y="80" text-anchor="middle" class="title">Footprint Chart Anatomy</text>
+  <text x="540" y="115" text-anchor="middle" class="subtitle">See the inside of every candle: the battle between buyers and sellers</text>
+
+  <!-- Main Footprint Diagram -->
+  <g transform="translate(80, 150)">
+    <rect width="500" height="520" rx="12" fill="#242424"/>
+    <text x="250" y="35" text-anchor="middle" class="section-title">Bid/Ask Footprint</text>
+    <text x="250" y="55" text-anchor="middle" class="sublabel">Single 5-minute NQ candle</text>
+
+    <!-- Price axis -->
+    <g transform="translate(30, 80)">
+      <text x="0" y="0" class="price">21,560</text>
+      <text x="0" y="35" class="price">21,555</text>
+      <text x="0" y="70" class="price">21,550</text>
+      <text x="0" y="105" class="price">21,545</text>
+      <text x="0" y="140" class="price">21,540</text>
+      <text x="0" y="175" class="price">21,535</text>
+      <text x="0" y="210" class="price">21,530</text>
+      <text x="0" y="245" class="price">21,525</text>
+      <text x="0" y="280" class="price">21,520</text>
+      <text x="0" y="315" class="price">21,515</text>
+      <text x="0" y="350" class="price">21,510</text>
+    </g>
+
+    <!-- Column headers -->
+    <g transform="translate(100, 75)">
+      <text x="40" y="0" text-anchor="middle" class="volume-bid">BID</text>
+      <text x="110" y="0" text-anchor="middle" class="volume-ask">ASK</text>
+      <text x="180" y="0" text-anchor="middle" class="label">Delta</text>
+    </g>
+
+    <!-- Footprint rows (bullish candle) -->
+    <g transform="translate(100, 80)">
+      <!-- Row 1: 21,560 - High of candle, low volume -->
+      <rect x="0" y="0" width="150" height="28" fill="#2a2a2a" stroke="#333333" stroke-width="1"/>
+      <text x="40" y="20" text-anchor="middle" class="volume-bid">45</text>
+      <text x="110" y="20" text-anchor="middle" class="volume-ask">120</text>
+      <text x="180" y="20" text-anchor="middle" class="delta-pos">+75</text>
+
+      <!-- Row 2: 21,555 -->
+      <rect x="0" y="35" width="150" height="28" fill="#2a2a2a" stroke="#333333" stroke-width="1"/>
+      <text x="40" y="55" text-anchor="middle" class="volume-bid">78</text>
+      <text x="110" y="55" text-anchor="middle" class="volume-ask">185</text>
+      <text x="180" y="55" text-anchor="middle" class="delta-pos">+107</text>
+
+      <!-- Row 3: 21,550 - STACKED IMBALANCE START -->
+      <rect x="0" y="70" width="150" height="28" fill="#00d4aa" opacity="0.2" stroke="#00d4aa" stroke-width="2"/>
+      <text x="40" y="90" text-anchor="middle" class="volume-bid">92</text>
+      <text x="110" y="90" text-anchor="middle" class="volume-ask">310</text>
+      <text x="180" y="90" text-anchor="middle" class="delta-pos">+218</text>
+
+      <!-- Row 4: 21,545 - STACKED IMBALANCE -->
+      <rect x="0" y="105" width="150" height="28" fill="#00d4aa" opacity="0.2" stroke="#00d4aa" stroke-width="2"/>
+      <text x="40" y="125" text-anchor="middle" class="volume-bid">85</text>
+      <text x="110" y="125" text-anchor="middle" class="volume-ask">420</text>
+      <text x="180" y="125" text-anchor="middle" class="delta-pos">+335</text>
+
+      <!-- Row 5: 21,540 - POC (highest volume) -->
+      <rect x="0" y="140" width="150" height="28" fill="#00d4aa" opacity="0.35" stroke="#00d4aa" stroke-width="3"/>
+      <text x="40" y="160" text-anchor="middle" class="volume-bid">180</text>
+      <text x="110" y="160" text-anchor="middle" class="volume-ask">800</text>
+      <text x="180" y="160" text-anchor="middle" class="delta-pos">+620</text>
+
+      <!-- Row 6: 21,535 - STACKED IMBALANCE -->
+      <rect x="0" y="175" width="150" height="28" fill="#00d4aa" opacity="0.2" stroke="#00d4aa" stroke-width="2"/>
+      <text x="40" y="195" text-anchor="middle" class="volume-bid">110</text>
+      <text x="110" y="195" text-anchor="middle" class="volume-ask">350</text>
+      <text x="180" y="195" text-anchor="middle" class="delta-pos">+240</text>
+
+      <!-- Row 7: 21,530 - STACKED IMBALANCE END -->
+      <rect x="0" y="210" width="150" height="28" fill="#00d4aa" opacity="0.2" stroke="#00d4aa" stroke-width="2"/>
+      <text x="40" y="230" text-anchor="middle" class="volume-bid">95</text>
+      <text x="110" y="230" text-anchor="middle" class="volume-ask">280</text>
+      <text x="180" y="230" text-anchor="middle" class="delta-pos">+185</text>
+
+      <!-- Row 8: 21,525 -->
+      <rect x="0" y="245" width="150" height="28" fill="#2a2a2a" stroke="#333333" stroke-width="1"/>
+      <text x="40" y="265" text-anchor="middle" class="volume-bid">140</text>
+      <text x="110" y="265" text-anchor="middle" class="volume-ask">165</text>
+      <text x="180" y="265" text-anchor="middle" class="delta-pos">+25</text>
+
+      <!-- Row 9: 21,520 -->
+      <rect x="0" y="280" width="150" height="28" fill="#2a2a2a" stroke="#333333" stroke-width="1"/>
+      <text x="40" y="300" text-anchor="middle" class="volume-bid">95</text>
+      <text x="110" y="300" text-anchor="middle" class="volume-ask">85</text>
+      <text x="180" y="300" text-anchor="middle" class="delta-neg">-10</text>
+
+      <!-- Row 10: 21,515 -->
+      <rect x="0" y="315" width="150" height="28" fill="#2a2a2a" stroke="#333333" stroke-width="1"/>
+      <text x="40" y="335" text-anchor="middle" class="volume-bid">65</text>
+      <text x="110" y="335" text-anchor="middle" class="volume-ask">55</text>
+      <text x="180" y="335" text-anchor="middle" class="delta-neg">-10</text>
+
+      <!-- Row 11: 21,510 - Low of candle -->
+      <rect x="0" y="350" width="150" height="28" fill="#2a2a2a" stroke="#333333" stroke-width="1"/>
+      <text x="40" y="370" text-anchor="middle" class="volume-bid">30</text>
+      <text x="110" y="370" text-anchor="middle" class="volume-ask">22</text>
+      <text x="180" y="370" text-anchor="middle" class="delta-neg">-8</text>
+    </g>
+
+    <!-- Callout annotations -->
+    <!-- POC callout -->
+    <g transform="translate(310, 225)">
+      <line x1="0" y1="0" x2="60" y2="-30" stroke="#00d4aa" stroke-width="2"/>
+      <circle cx="0" cy="0" r="5" fill="#00d4aa"/>
+      <text x="65" y="-35" class="callout">POC</text>
+      <text x="65" y="-20" class="sublabel">Highest volume level</text>
+      <text x="65" y="-5" class="sublabel">in this bar</text>
+    </g>
+
+    <!-- Stacked imbalance bracket -->
+    <g transform="translate(315, 150)">
+      <path d="M 0 0 L 15 0 L 15 130 L 0 130" stroke="#00d4aa" stroke-width="2" fill="none"/>
+      <text x="25" y="55" class="callout">Stacked</text>
+      <text x="25" y="70" class="callout">Imbalances</text>
+      <text x="25" y="90" class="sublabel">5 consecutive levels</text>
+      <text x="25" y="105" class="sublabel">Ask &gt; 200% of Bid</text>
+    </g>
+
+    <!-- Imbalance ratio example -->
+    <g transform="translate(80, 450)">
+      <rect x="0" y="0" width="380" height="50" rx="6" fill="#1e1e1e"/>
+      <text x="190" y="20" text-anchor="middle" class="label">Imbalance Threshold: 200%+ ratio</text>
+      <text x="190" y="40" text-anchor="middle" class="sublabel">Example: 800 Ask / 180 Bid = 444% (strong bullish imbalance)</text>
+    </g>
+  </g>
+
+  <!-- Key Elements Panel -->
+  <g transform="translate(600, 150)">
+    <rect width="400" height="520" rx="12" fill="#242424"/>
+    <text x="200" y="35" text-anchor="middle" class="section-title">Key Elements</text>
+
+    <!-- Imbalance -->
+    <g transform="translate(30, 65)">
+      <rect x="0" y="0" width="340" height="70" rx="6" fill="#00d4aa" opacity="0.1"/>
+      <text x="170" y="25" text-anchor="middle" class="label">Imbalance</text>
+      <text x="170" y="45" text-anchor="middle" class="body">Ask volume 200%+ of Bid (bullish)</text>
+      <text x="170" y="62" text-anchor="middle" class="body">Bid volume 200%+ of Ask (bearish)</text>
+    </g>
+
+    <!-- Stacked Imbalance -->
+    <g transform="translate(30, 145)">
+      <rect x="0" y="0" width="340" height="70" rx="6" fill="#00d4aa" opacity="0.1"/>
+      <text x="170" y="25" text-anchor="middle" class="label">Stacked Imbalances</text>
+      <text x="170" y="45" text-anchor="middle" class="body">3+ consecutive levels with imbalance</text>
+      <text x="170" y="62" text-anchor="middle" class="body">Signals strong institutional conviction</text>
+    </g>
+
+    <!-- POC -->
+    <g transform="translate(30, 225)">
+      <rect x="0" y="0" width="340" height="70" rx="6" fill="#00d4aa" opacity="0.1"/>
+      <text x="170" y="25" text-anchor="middle" class="label">Point of Control (POC)</text>
+      <text x="170" y="45" text-anchor="middle" class="body">Highest volume level within bar</text>
+      <text x="170" y="62" text-anchor="middle" class="body">POC at top = bullish continuation</text>
+    </g>
+
+    <!-- HVN/LVN -->
+    <g transform="translate(30, 305)">
+      <rect x="0" y="0" width="340" height="85" rx="6" fill="#00d4aa" opacity="0.1"/>
+      <text x="170" y="25" text-anchor="middle" class="label">HVN / LVN</text>
+      <text x="170" y="45" text-anchor="middle" class="body">High Volume Node = future S/R</text>
+      <text x="170" y="62" text-anchor="middle" class="body">Low Volume Node = price rejection</text>
+      <text x="170" y="79" text-anchor="middle" class="sublabel">LVNs traversed quickly on retest</text>
+    </g>
+
+    <!-- Delta -->
+    <g transform="translate(30, 400)">
+      <rect x="0" y="0" width="340" height="85" rx="6" fill="#00d4aa" opacity="0.1"/>
+      <text x="170" y="25" text-anchor="middle" class="label">Delta (Ask − Bid)</text>
+      <text x="170" y="45" text-anchor="middle" class="delta-pos">+Delta = aggressive buyers dominating</text>
+      <text x="170" y="65" text-anchor="middle" class="delta-neg">−Delta = aggressive sellers dominating</text>
+      <text x="170" y="82" text-anchor="middle" class="sublabel">Net direction of aggression at each level</text>
+    </g>
+  </g>
+
+  <!-- Absorption Section -->
+  <g transform="translate(80, 700)">
+    <rect width="920" height="280" rx="12" fill="#242424"/>
+    <text x="460" y="35" text-anchor="middle" class="section-title">Absorption Patterns</text>
+    <text x="460" y="55" text-anchor="middle" class="sublabel">When aggressive orders are absorbed by passive institutional orders</text>
+
+    <!-- Bullish Absorption -->
+    <g transform="translate(40, 80)">
+      <rect x="0" y="0" width="400" height="170" rx="8" fill="#1e1e1e"/>
+      <text x="200" y="25" text-anchor="middle" class="label" fill="#00d4aa">Bullish Absorption</text>
+      <text x="200" y="50" text-anchor="middle" class="body">Aggressive selling absorbed by passive buyers</text>
+
+      <!-- Visual -->
+      <g transform="translate(30, 65)">
+        <text x="0" y="15" class="sublabel">Signal:</text>
+        <text x="55" y="15" class="body">Negative delta spike</text>
+        <text x="55" y="35" class="body">Price fails to move lower</text>
+        <text x="55" y="55" class="body">Narrow range at support</text>
+      </g>
+
+      <g transform="translate(220, 65)">
+        <text x="0" y="15" class="sublabel">Result:</text>
+        <text x="55" y="15" class="body">Sellers exhaust</text>
+        <text x="55" y="35" class="body">Sharp reversal UP</text>
+        <text x="55" y="55" class="stat">Long entry signal</text>
+      </g>
+
+      <!-- Arrow -->
+      <g transform="translate(330, 130)">
+        <polygon points="0,0 20,10 0,20" fill="#00d4aa"/>
+        <text x="30" y="15" class="callout">BUY</text>
+      </g>
+    </g>
+
+    <!-- Bearish Absorption -->
+    <g transform="translate(480, 80)">
+      <rect x="0" y="0" width="400" height="170" rx="8" fill="#1e1e1e"/>
+      <text x="200" y="25" text-anchor="middle" class="label" fill="#ff6b6b">Bearish Absorption</text>
+      <text x="200" y="50" text-anchor="middle" class="body">Aggressive buying absorbed by passive sellers</text>
+
+      <!-- Visual -->
+      <g transform="translate(30, 65)">
+        <text x="0" y="15" class="sublabel">Signal:</text>
+        <text x="55" y="15" class="body">Positive delta spike</text>
+        <text x="55" y="35" class="body">Price fails to advance</text>
+        <text x="55" y="55" class="body">Narrow range at resistance</text>
+      </g>
+
+      <g transform="translate(220, 65)">
+        <text x="0" y="15" class="sublabel">Result:</text>
+        <text x="55" y="15" class="body">Buyers exhaust</text>
+        <text x="55" y="35" class="body">Sharp reversal DOWN</text>
+        <text x="55" y="55" class="stat" fill="#ff6b6b">Short entry signal</text>
+      </g>
+
+      <!-- Arrow -->
+      <g transform="translate(330, 130)">
+        <polygon points="0,10 20,0 20,20" fill="#ff6b6b"/>
+        <text x="30" y="15" class="callout" fill="#ff6b6b">SELL</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Seven Detection Methods -->
+  <g transform="translate(80, 1010)">
+    <rect width="920" height="380" rx="12" fill="#242424"/>
+    <text x="460" y="35" text-anchor="middle" class="section-title">Seven Detection Methods</text>
+
+    <!-- Methods Grid -->
+    <g transform="translate(30, 60)">
+      <!-- Row 1 -->
+      <g transform="translate(0, 0)">
+        <rect x="0" y="0" width="280" height="70" rx="6" fill="#2a2a2a"/>
+        <text x="140" y="25" text-anchor="middle" class="label">1. Delta Stagnation</text>
+        <text x="140" y="45" text-anchor="middle" class="sublabel">Strong delta, no price movement</text>
+        <text x="140" y="60" text-anchor="middle" class="sublabel">Passive absorption in progress</text>
+      </g>
+
+      <g transform="translate(300, 0)">
+        <rect x="0" y="0" width="280" height="70" rx="6" fill="#2a2a2a"/>
+        <text x="140" y="25" text-anchor="middle" class="label">2. Wick Trap</text>
+        <text x="140" y="45" text-anchor="middle" class="sublabel">Probe into key level, instant reversal</text>
+        <text x="140" y="60" text-anchor="middle" class="sublabel">Stops triggered and absorbed</text>
+      </g>
+
+      <g transform="translate(600, 0)">
+        <rect x="0" y="0" width="280" height="70" rx="6" fill="#2a2a2a"/>
+        <text x="140" y="25" text-anchor="middle" class="label">3. CVD Divergence</text>
+        <text x="140" y="45" text-anchor="middle" class="sublabel">Delta trending opposite to price</text>
+        <text x="140" y="60" text-anchor="middle" class="sublabel">Aggression being absorbed</text>
+      </g>
+
+      <!-- Row 2 -->
+      <g transform="translate(0, 85)">
+        <rect x="0" y="0" width="280" height="70" rx="6" fill="#2a2a2a"/>
+        <text x="140" y="25" text-anchor="middle" class="label">4. Multi-Test</text>
+        <text x="140" y="45" text-anchor="middle" class="sublabel">Repeated tests of same level</text>
+        <text x="140" y="60" text-anchor="middle" class="sublabel">Institutional defense active</text>
+      </g>
+
+      <g transform="translate(300, 85)">
+        <rect x="0" y="0" width="280" height="70" rx="6" fill="#2a2a2a"/>
+        <text x="140" y="25" text-anchor="middle" class="label">5. VWAP Absorption</text>
+        <text x="140" y="45" text-anchor="middle" class="sublabel">Absorption at VWAP level</text>
+        <text x="140" y="60" text-anchor="middle" class="sublabel">Institutions defending avg cost</text>
+      </g>
+
+      <g transform="translate(600, 85)">
+        <rect x="0" y="0" width="280" height="70" rx="6" fill="#2a2a2a"/>
+        <text x="140" y="25" text-anchor="middle" class="label">6. Failed Breakout</text>
+        <text x="140" y="45" text-anchor="middle" class="sublabel">Breaks level, instantly reverses</text>
+        <text x="140" y="60" text-anchor="middle" class="sublabel">Traps breakout traders</text>
+      </g>
+
+      <!-- Row 3 (centered) -->
+      <g transform="translate(150, 170)">
+        <rect x="0" y="0" width="280" height="70" rx="6" fill="#2a2a2a"/>
+        <text x="140" y="25" text-anchor="middle" class="label">7. Liquidity Sweep</text>
+        <text x="140" y="45" text-anchor="middle" class="sublabel">Spike through stops, reversal back</text>
+        <text x="140" y="60" text-anchor="middle" class="sublabel">Institutions fill at better prices</text>
+      </g>
+
+      <!-- Signal Hierarchy -->
+      <g transform="translate(450, 170)">
+        <rect x="0" y="0" width="410" height="70" rx="6" fill="#00d4aa" opacity="0.1"/>
+        <text x="205" y="20" text-anchor="middle" class="label">Signal Priority (highest to lowest)</text>
+        <text x="205" y="42" text-anchor="middle" class="body">Retest → Sweep → Trap → Divergence → Basic</text>
+        <text x="205" y="60" text-anchor="middle" class="sublabel">Multiple methods aligned = highest conviction</text>
+      </g>
+    </g>
+
+    <!-- Scoring note -->
+    <g transform="translate(30, 320)">
+      <rect x="0" y="0" width="860" height="45" rx="6" fill="#00d4aa" opacity="0.1"/>
+      <text x="430" y="18" text-anchor="middle" class="label">Quantified Scoring: 70+ = Strong signal (up to 1.5x size)</text>
+      <text x="430" y="36" text-anchor="middle" class="sublabel">Score factors: Volume intensity, Delta strength, Compression, Level confluence, Wick/Sweep bonus</text>
+    </g>
+  </g>
+
+  <!-- Chart Types -->
+  <g transform="translate(80, 1420)">
+    <rect width="920" height="150" rx="12" fill="#242424"/>
+    <text x="460" y="35" text-anchor="middle" class="section-title">Footprint Chart Types</text>
+
+    <g transform="translate(30, 55)">
+      <!-- Bid/Ask -->
+      <g transform="translate(0, 0)">
+        <rect x="0" y="0" width="280" height="70" rx="6" fill="#1e1e1e"/>
+        <text x="140" y="25" text-anchor="middle" class="label" fill="#00d4aa">Bid/Ask Footprint</text>
+        <text x="140" y="45" text-anchor="middle" class="sublabel">Bid left | Ask right at each level</text>
+        <text x="140" y="62" text-anchor="middle" class="sublabel">Most common, direct imbalance view</text>
+      </g>
+
+      <!-- Delta -->
+      <g transform="translate(300, 0)">
+        <rect x="0" y="0" width="280" height="70" rx="6" fill="#1e1e1e"/>
+        <text x="140" y="25" text-anchor="middle" class="label" fill="#00d4aa">Delta Footprint</text>
+        <text x="140" y="45" text-anchor="middle" class="sublabel">Net (Ask − Bid) at each level</text>
+        <text x="140" y="62" text-anchor="middle" class="sublabel">Quick directional imbalance view</text>
+      </g>
+
+      <!-- Volume -->
+      <g transform="translate(600, 0)">
+        <rect x="0" y="0" width="280" height="70" rx="6" fill="#1e1e1e"/>
+        <text x="140" y="25" text-anchor="middle" class="label" fill="#00d4aa">Volume Footprint</text>
+        <text x="140" y="45" text-anchor="middle" class="sublabel">Total volume at each level</text>
+        <text x="140" y="62" text-anchor="middle" class="sublabel">HVN/LVN identification</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Key Insight -->
+  <g transform="translate(80, 1600)">
+    <rect width="920" height="130" rx="12" fill="#1e1e1e"/>
+    <text x="460" y="40" text-anchor="middle" class="section-title">Key Insight</text>
+    <text x="460" y="75" text-anchor="middle" class="body" font-size="15">A single 5-minute NQ bar that looks ordinary on a candlestick chart</text>
+    <text x="460" y="100" text-anchor="middle" class="body" font-size="15">can reveal a concentrated institutional buying program in footprint form.</text>
+    <text x="460" y="122" text-anchor="middle" class="sublabel">Footprint shows the "why" behind price movement. Standard charts only show the "what".</text>
+  </g>
+
+  <!-- Timing -->
+  <g transform="translate(80, 1755)">
+    <rect width="920" height="50" rx="8" fill="#00d4aa" opacity="0.1"/>
+    <text x="460" y="32" text-anchor="middle" class="body" font-size="14" fill="#00d4aa">Best RTH windows: 9:30-11:30 AM (opening) • 1:00-2:30 PM (afternoon trend) • 3:00-4:00 PM (closing)</text>
+  </g>
+
+  <!-- Footer -->
+  <rect x="0" y="1860" width="1080" height="60" fill="#141414"/>
+  <text x="540" y="1898" text-anchor="middle" class="footer">Auction Mentor | academy.auctionmentor.io</text>
+</svg>

@@ -67,6 +67,85 @@
     '<line x1="5" y1="14" x2="27" y2="14" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 2" opacity="0.3"/>' +
     '</svg>';
 
+  // ── AMT Glossary for Tooltips ──
+  var AMT_GLOSSARY = {
+    "VAH": { name: "Value Area High", def: "Upper boundary of the 70% volume zone." },
+    "VAL": { name: "Value Area Low", def: "Lower boundary of the 70% volume zone." },
+    "POC": { name: "Point of Control", def: "The single price level with the highest traded volume." },
+    "VPOC": { name: "Virgin Point of Control", def: "A POC that has not been revisited by price." },
+    "IB": { name: "Initial Balance", def: "The price range of the first hour of trading." },
+    "IBH": { name: "Initial Balance High", def: "The highest price during the first hour of trading." },
+    "IBL": { name: "Initial Balance Low", def: "The lowest price during the first hour of trading." },
+    "IBR": { name: "Initial Balance Range", def: "The distance between IBH and IBL in points." },
+    "IBM": { name: "Initial Balance Midpoint", def: "The center point between IBH and IBL." },
+    "HVN": { name: "High Volume Node", def: "Price level with significant volume accumulation." },
+    "LVN": { name: "Low Volume Node", def: "Price level with minimal volume, price moves quickly through." },
+    "AMT": { name: "Auction Market Theory", def: "Framework for understanding markets as continuous auctions." },
+    "RTH": { name: "Regular Trading Hours", def: "The main trading session (9:30 AM to 4:15 PM ET for futures)." },
+    "ONH": { name: "Overnight High", def: "The highest price during the overnight session." },
+    "ONL": { name: "Overnight Low", def: "The lowest price during the overnight session." },
+    "TPO": { name: "Time Price Opportunity", def: "A letter representing price at a specific time period on Market Profile." },
+    "VWAP": { name: "Volume Weighted Average Price", def: "Average price weighted by volume." },
+    "OTF": { name: "Other Timeframe", def: "Participants operating on longer timeframes than day traders." },
+    "DTF": { name: "Day Timeframe", def: "Participants operating intraday, responding to market structure." },
+    "VA": { name: "Value Area", def: "The price range containing 70% of total traded volume." },
+    "OD": { name: "Open Drive", def: "Immediate unidirectional move from the opening bell." },
+    "OTD": { name: "Open Test Drive", def: "Initial probe, sharp reversal to test a level, then sustained drive." },
+    "ORR": { name: "Open Rejection Reverse", def: "Failed initial drive that reverses to trend in the opposite direction." },
+    "OA": { name: "Open Auction", def: "Balanced probes in both directions without sustained commitment." },
+    "OAIR": { name: "Open Auction In Range", def: "Opens and rotates within the prior day's range." },
+    "OAOR": { name: "Open Auction Out of Range", def: "Opens outside the prior range but rotates rather than continuing." }
+  };
+
+  // Build regex pattern for AMT terms (sorted by length descending to match longer terms first)
+  var AMT_TERMS_SORTED = Object.keys(AMT_GLOSSARY).sort(function(a, b) { return b.length - a.length; });
+  var AMT_PATTERN = new RegExp('\\b(' + AMT_TERMS_SORTED.join('|') + ')\\b', 'g');
+
+  // Track which terms have been wrapped in current content to avoid double-wrapping
+  function wrapAMTTerms(html) {
+    // Don't process content inside existing tags or already-wrapped terms
+    var tokens = [];
+    var lastIndex = 0;
+    var tagRegex = /<[^>]+>/g;
+    var match;
+
+    // Split HTML into text and tag segments
+    while ((match = tagRegex.exec(html)) !== null) {
+      if (match.index > lastIndex) {
+        tokens.push({ type: 'text', content: html.slice(lastIndex, match.index) });
+      }
+      tokens.push({ type: 'tag', content: match[0] });
+      lastIndex = tagRegex.lastIndex;
+    }
+    if (lastIndex < html.length) {
+      tokens.push({ type: 'text', content: html.slice(lastIndex) });
+    }
+
+    // Track wrapped terms to only wrap first occurrence of each
+    var wrappedTerms = {};
+
+    // Process text segments only
+    var result = tokens.map(function(token) {
+      if (token.type === 'tag') return token.content;
+
+      return token.content.replace(AMT_PATTERN, function(matched) {
+        var term = matched.toUpperCase();
+        var glossaryEntry = AMT_GLOSSARY[term];
+
+        if (!glossaryEntry) return matched;
+
+        // Only wrap first occurrence of each term
+        if (wrappedTerms[term]) return matched;
+        wrappedTerms[term] = true;
+
+        var tooltip = glossaryEntry.name + '. ' + glossaryEntry.def;
+        return '<span class="amt-term" data-tooltip="' + tooltip + '">' + matched + '</span>';
+      });
+    }).join('');
+
+    return result;
+  }
+
   // ── Theme Toggle ──
   function initTheme() {
     var dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -280,6 +359,7 @@
     bindTopBarEvents();
     bindSidebarEvents(section);
     bindContentEvents(section);
+    mountInfographics();
 
     // Mark first chapter as complete
     markChapterComplete(section.id, 0);
@@ -369,8 +449,8 @@
       });
     }
 
-    // Content
-    html += '<div class="chapter-content">' + ch.content + '</div>';
+    // Content (with AMT abbreviation tooltips)
+    html += '<div class="chapter-content">' + wrapAMTTerms(ch.content) + '</div>';
 
     // Navigation
     html += '<div class="chapter-nav">';
@@ -400,6 +480,7 @@
       contentArea.innerHTML = renderChapterContent(section, idx);
       window.scrollTo(0, 0);
       bindContentEvents(section);
+      mountInfographics();
     }
 
     // Update sidebar active state
@@ -439,6 +520,35 @@
     var backdrop = $("#sidebar-backdrop");
     if (sidebar) sidebar.classList.remove("open");
     if (backdrop) backdrop.classList.remove("open");
+  }
+
+  // ── Infographic Mount System ──
+  var INFOGRAPHIC_MAP = {
+    "profile-shapes": "InfographicProfileShapes",
+    "value-area-anatomy": "InfographicValueAreaAnatomy",
+    "day-type-tree": "InfographicDayTypeTree",
+    "opening-types": "InfographicOpeningTypes",
+    "footprint-anatomy": "InfographicFootprintAnatomy"
+  };
+
+  var mountedInfographics = [];
+
+  function mountInfographics() {
+    // Unmount any previously mounted infographics
+    mountedInfographics.forEach(function (inst) {
+      if (inst && inst.unmount) inst.unmount();
+    });
+    mountedInfographics = [];
+
+    // Find and mount new infographics
+    $$(".infographic-mount").forEach(function (el) {
+      var componentName = el.getAttribute("data-component");
+      var globalName = INFOGRAPHIC_MAP[componentName];
+      if (globalName && window[globalName] && window[globalName].mount) {
+        var instance = window[globalName].mount(el);
+        if (instance) mountedInfographics.push(instance);
+      }
+    });
   }
 
   function openSidebar() {

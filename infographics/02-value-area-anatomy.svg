@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+  <defs>
+    <style>
+      .title { font-family: 'Inter', 'Helvetica Neue', sans-serif; font-size: 48px; font-weight: 700; fill: #e8e8e8; }
+      .subtitle { font-family: 'Inter', 'Helvetica Neue', sans-serif; font-size: 22px; font-weight: 400; fill: #888888; }
+      .label { font-family: 'Inter', 'Helvetica Neue', sans-serif; font-size: 24px; font-weight: 700; fill: #00d4aa; }
+      .def { font-family: 'Inter', 'Helvetica Neue', sans-serif; font-size: 18px; font-weight: 400; fill: #e8e8e8; }
+      .price { font-family: 'JetBrains Mono', monospace; font-size: 16px; fill: #888888; }
+      .footer { font-family: 'Inter', 'Helvetica Neue', sans-serif; font-size: 16px; font-weight: 500; fill: #666666; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1080" height="1920" fill="#1a1a1a"/>
+
+  <!-- Title -->
+  <text x="540" y="100" text-anchor="middle" class="title">Anatomy of the Value Area</text>
+  <text x="540" y="140" text-anchor="middle" class="subtitle">The 70% volume zone where participants found fair value</text>
+
+  <!-- Price axis -->
+  <g transform="translate(80, 200)">
+    <line x1="60" y1="0" x2="60" y2="1400" stroke="#444444" stroke-width="2"/>
+    <text x="30" y="100" class="price" text-anchor="end">21,600</text>
+    <text x="30" y="300" class="price" text-anchor="end">21,550</text>
+    <text x="30" y="500" class="price" text-anchor="end">21,500</text>
+    <text x="30" y="700" class="price" text-anchor="end">21,450</text>
+    <text x="30" y="900" class="price" text-anchor="end">21,400</text>
+    <text x="30" y="1100" class="price" text-anchor="end">21,350</text>
+    <text x="30" y="1300" class="price" text-anchor="end">21,300</text>
+  </g>
+
+  <!-- Volume Profile Histogram -->
+  <g transform="translate(150, 200)">
+    <!-- LVN at top (thin bar) -->
+    <rect x="0" y="50" width="40" height="30" fill="#e8e8e8" opacity="0.3"/>
+    <rect x="0" y="90" width="60" height="30" fill="#e8e8e8" opacity="0.3"/>
+
+    <!-- HVN cluster outside VA -->
+    <rect x="0" y="130" width="120" height="30" fill="#e8e8e8" opacity="0.4"/>
+
+    <!-- VAH line -->
+    <line x1="-10" y1="200" x2="400" y2="200" stroke="#00d4aa" stroke-width="3"/>
+
+    <!-- Value Area (70% zone) - teal colored -->
+    <rect x="0" y="200" width="180" height="30" fill="#00d4aa" opacity="0.4"/>
+    <rect x="0" y="240" width="220" height="30" fill="#00d4aa" opacity="0.4"/>
+    <rect x="0" y="280" width="260" height="30" fill="#00d4aa" opacity="0.5"/>
+    <rect x="0" y="320" width="300" height="30" fill="#00d4aa" opacity="0.5"/>
+    <rect x="0" y="360" width="340" height="30" fill="#00d4aa" opacity="0.6"/>
+
+    <!-- POC (longest bar) -->
+    <rect x="0" y="400" width="380" height="30" fill="#00d4aa" opacity="0.8"/>
+
+    <!-- More Value Area -->
+    <rect x="0" y="440" width="320" height="30" fill="#00d4aa" opacity="0.5"/>
+    <rect x="0" y="480" width="280" height="30" fill="#00d4aa" opacity="0.5"/>
+    <rect x="0" y="520" width="240" height="30" fill="#00d4aa" opacity="0.4"/>
+    <rect x="0" y="560" width="200" height="30" fill="#00d4aa" opacity="0.4"/>
+    <rect x="0" y="600" width="160" height="30" fill="#00d4aa" opacity="0.4"/>
+
+    <!-- VAL line -->
+    <line x1="-10" y1="640" x2="400" y2="640" stroke="#00d4aa" stroke-width="3"/>
+
+    <!-- Outside VA bottom -->
+    <rect x="0" y="650" width="100" height="30" fill="#e8e8e8" opacity="0.3"/>
+    <rect x="0" y="690" width="60" height="30" fill="#e8e8e8" opacity="0.3"/>
+
+    <!-- LVN at bottom -->
+    <rect x="0" y="730" width="30" height="30" fill="#e8e8e8" opacity="0.2"/>
+
+    <!-- More bars -->
+    <rect x="0" y="770" width="140" height="30" fill="#e8e8e8" opacity="0.4"/>
+    <rect x="0" y="810" width="100" height="30" fill="#e8e8e8" opacity="0.3"/>
+  </g>
+
+  <!-- Callout lines and labels -->
+
+  <!-- VAH Callout -->
+  <g transform="translate(560, 400)">
+    <line x1="0" y1="0" x2="80" y2="-60" stroke="#00d4aa" stroke-width="2"/>
+    <circle cx="0" cy="0" r="6" fill="#00d4aa"/>
+    <text x="90" y="-70" class="label">VAH</text>
+    <text x="90" y="-45" class="def">Value Area High</text>
+    <text x="90" y="-20" class="def" fill="#888888">Upper boundary of the 70%</text>
+    <text x="90" y="5" class="def" fill="#888888">zone. Highest price accepted</text>
+    <text x="90" y="30" class="def" fill="#888888">as fair value.</text>
+  </g>
+
+  <!-- POC Callout -->
+  <g transform="translate(540, 615)">
+    <line x1="0" y1="0" x2="100" y2="0" stroke="#00d4aa" stroke-width="2"/>
+    <circle cx="0" cy="0" r="6" fill="#00d4aa"/>
+    <text x="110" y="-30" class="label">POC</text>
+    <text x="110" y="-5" class="def">Point of Control</text>
+    <text x="110" y="25" class="def" fill="#888888">Single price level with the</text>
+    <text x="110" y="50" class="def" fill="#888888">highest traded volume. The</text>
+    <text x="110" y="75" class="def" fill="#888888">"fairest price" where most</text>
+    <text x="110" y="100" class="def" fill="#888888">agreement occurred.</text>
+  </g>
+
+  <!-- VAL Callout -->
+  <g transform="translate(560, 840)">
+    <line x1="0" y1="0" x2="80" y2="60" stroke="#00d4aa" stroke-width="2"/>
+    <circle cx="0" cy="0" r="6" fill="#00d4aa"/>
+    <text x="90" y="50" class="label">VAL</text>
+    <text x="90" y="75" class="def">Value Area Low</text>
+    <text x="90" y="105" class="def" fill="#888888">Lower boundary of the 70%</text>
+    <text x="90" y="130" class="def" fill="#888888">zone. Lowest price accepted</text>
+    <text x="90" y="155" class="def" fill="#888888">as fair value.</text>
+  </g>
+
+  <!-- HVN Callout -->
+  <g transform="translate(280, 330)">
+    <line x1="0" y1="0" x2="-100" y2="-80" stroke="#e8e8e8" stroke-width="2"/>
+    <circle cx="0" cy="0" r="6" fill="#e8e8e8"/>
+    <text x="-320" y="-100" class="label" fill="#e8e8e8">HVN</text>
+    <text x="-320" y="-75" class="def">High Volume Node</text>
+    <text x="-320" y="-45" class="def" fill="#888888">Zone of strong acceptance.</text>
+    <text x="-320" y="-20" class="def" fill="#888888">Price slows here. Acts as</text>
+    <text x="-320" y="5" class="def" fill="#888888">support or resistance.</text>
+  </g>
+
+  <!-- LVN Callout -->
+  <g transform="translate(190, 930)">
+    <line x1="0" y1="0" x2="-80" y2="80" stroke="#e8e8e8" stroke-width="2"/>
+    <circle cx="0" cy="0" r="6" fill="#e8e8e8"/>
+    <text x="-320" y="70" class="label" fill="#e8e8e8">LVN</text>
+    <text x="-320" y="95" class="def">Low Volume Node</text>
+    <text x="-320" y="125" class="def" fill="#888888">Air pocket. Price moved</text>
+    <text x="-320" y="150" class="def" fill="#888888">through quickly. Accelerates</text>
+    <text x="-320" y="175" class="def" fill="#888888">when revisited.</text>
+  </g>
+
+  <!-- 70% Zone bracket -->
+  <g transform="translate(555, 400)">
+    <path d="M 0 0 L -15 0 L -15 440 L 0 440" stroke="#00d4aa" stroke-width="2" fill="none"/>
+    <text x="-45" y="220" class="def" fill="#00d4aa" text-anchor="middle" transform="rotate(-90, -45, 220)">70% of Volume</text>
+  </g>
+
+  <!-- Key insight box -->
+  <g transform="translate(80, 1560)">
+    <rect width="920" height="200" rx="12" fill="#242424"/>
+    <text x="460" y="50" text-anchor="middle" class="label">Key Insight</text>
+    <text x="460" y="90" text-anchor="middle" class="def">The Value Area represents where 70% of trading volume occurred.</text>
+    <text x="460" y="120" text-anchor="middle" class="def">Price inside the VA is at fair value. Price outside is extended.</text>
+    <text x="460" y="160" text-anchor="middle" class="def" fill="#888888">The 80% Rule: If price enters the VA and accepts for two 30 minute</text>
+    <text x="460" y="185" text-anchor="middle" class="def" fill="#888888">brackets, there is an 80% chance of rotating through the entire VA.</text>
+  </g>
+
+  <!-- Footer -->
+  <rect x="0" y="1860" width="1080" height="60" fill="#141414"/>
+  <text x="540" y="1898" text-anchor="middle" class="footer">Auction Mentor | academy.auctionmentor.io</text>
+</svg>
