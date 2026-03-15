@@ -107,7 +107,7 @@ export default async function handler(req, res) {
         });
 
         res.setHeader('Set-Cookie', [
-            `am_session=${encodeURIComponent(sessionData)}; Path=/; Max-Age=${SESSION_DURATION_HOURS * 3600}; HttpOnly; Secure; SameSite=Lax`,
+            `am_session=${encodeURIComponent(sessionData)}; Path=/; Domain=.auctionmentor.io; Max-Age=${SESSION_DURATION_HOURS * 3600}; HttpOnly; Secure; SameSite=Lax`,
         ]);
 
         // ─── Audit log ───────────────────────────────────────────────────
