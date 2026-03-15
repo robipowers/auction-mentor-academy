@@ -25,7 +25,7 @@ export default async function handler(req, res) {
     if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
     try {
-        const { email } = req.body || {};
+        const { email, redirect } = req.body || {};
 
         if (!email || typeof email !== 'string') {
             return res.status(400).json({ error: 'Email is required' });
@@ -97,7 +97,8 @@ export default async function handler(req, res) {
         }
 
         // ─── Send magic link email via Resend ────────────────────────────
-        const magicLink = `${APP_URL}/api/auth/verify?token=${token}`;
+        const redirectParam = redirect ? `&redirect=${encodeURIComponent(redirect)}` : '';
+        const magicLink = `${APP_URL}/api/auth/verify?token=${token}${redirectParam}`;
 
         const emailHtml = `
         <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 600px; margin: 0 auto; background: #0d120f; color: #e0e0e0; padding: 40px 30px; border-radius: 12px;">

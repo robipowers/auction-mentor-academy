@@ -13,8 +13,14 @@ const supabase = createClient(
 const APP_NAME = process.env.APP_NAME || 'academy'; // 'academy' or 'dashboard'
 const SESSION_DURATION_HOURS = 24;
 
+// Allowed redirect destinations (whitelist for security)
+const ALLOWED_REDIRECTS = {
+    'app': 'https://app.auctionmentor.io',
+    'academy': 'https://academy.auctionmentor.io',
+};
+
 export default async function handler(req, res) {
-    const { token, confirm } = req.query;
+    const { token, confirm, redirect } = req.query;
 
     if (!token || typeof token !== 'string') {
         return sendErrorPage(res, 'Invalid Login Link', 'This login link is invalid or malformed.');
@@ -22,7 +28,7 @@ export default async function handler(req, res) {
 
     // Step 1: Show confirmation page (prevents Discord/Slack bots from consuming token)
     if (req.method === 'GET' && !confirm) {
-        return sendConfirmPage(res, token);
+        return sendConfirmPage(res, token, redirect);
     }
 
     // Step 2: User clicked "Log In" button - now verify the token
@@ -122,7 +128,8 @@ export default async function handler(req, res) {
         });
 
         // ─── Redirect to app ────────────────────────────────────────────
-        res.redirect(302, '/');
+        const redirectUrl = ALLOWED_REDIRECTS[redirect] || '/';
+        res.redirect(302, redirectUrl);
 
     } catch (err) {
         console.error('Verify error:', err);
@@ -131,7 +138,10 @@ export default async function handler(req, res) {
     }
 }
 
-function sendConfirmPage(res, token) {
+function sendConfirmPage(res, token, redirect) {
+    const redirectParam = redirect ? `&redirect=${encodeURIComponent(redirect)}` : '';
+    const destination = redirect === 'app' ? 'Strategy App' : 'Academy';
+
     res.status(200).send(`
     <html>
         <head>
@@ -144,11 +154,11 @@ function sendConfirmPage(res, token) {
                 <div style="font-size:48px; margin-bottom:16px;">🔐</div>
                 <h2 style="color:#fff; font-size:22px; margin:0 0 12px;">Welcome to Auction Mentor</h2>
                 <p style="color:#888; font-size:14px; line-height:1.6; margin:0 0 28px;">Click the button below to log in to your account.</p>
-                <a href="/api/auth/verify?token=${encodeURIComponent(token)}&confirm=1"
+                <a href="/api/auth/verify?token=${encodeURIComponent(token)}&confirm=1${redirectParam}"
                    style="display:inline-block; padding:16px 40px; background:linear-gradient(135deg,#5FA074,#4A7C59); color:#fff; text-decoration:none; border-radius:10px; font-weight:600; font-size:16px;">
-                    Log In to Academy →
+                    Log In to ${destination} →
                 </a>
-                <p style="color:#666; font-size:12px; margin-top:24px;">This link expires in 48 hours and can only be used once.</p>
+                <p style="color:#666; font-size:12px; margin-top:24px;">This link expires in 10 minutes and can only be used once.</p>
             </div>
         </body>
     </html>
