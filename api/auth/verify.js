@@ -14,13 +14,19 @@ const APP_NAME = process.env.APP_NAME || 'academy'; // 'academy' or 'dashboard'
 const SESSION_DURATION_HOURS = 24;
 
 export default async function handler(req, res) {
-    if (req.method !== 'GET') return res.status(405).send('Method not allowed');
-
-    const { token } = req.query;
+    const { token, confirm } = req.query;
 
     if (!token || typeof token !== 'string') {
         return sendErrorPage(res, 'Invalid Login Link', 'This login link is invalid or malformed.');
     }
+
+    // Step 1: Show confirmation page (prevents Discord/Slack bots from consuming token)
+    if (req.method === 'GET' && !confirm) {
+        return sendConfirmPage(res, token);
+    }
+
+    // Step 2: User clicked "Log In" button - now verify the token
+    if (req.method !== 'GET') return res.status(405).send('Method not allowed');
 
     try {
         // ─── Find and validate the token ─────────────────────────────────
@@ -44,7 +50,7 @@ export default async function handler(req, res) {
         // Check if expired
         if (new Date(authToken.expires_at) < new Date()) {
             return sendErrorPage(res, 'Link Expired',
-                'This login link has expired. Links are valid for 10 minutes. Please request a new one.');
+                'This login link has expired. Please request a new one.');
         }
 
         // ─── Mark token as used (IMMEDIATELY — prevents race conditions) ─
@@ -123,6 +129,30 @@ export default async function handler(req, res) {
         return sendErrorPage(res, 'Something Went Wrong',
             'An unexpected error occurred. Please try logging in again.');
     }
+}
+
+function sendConfirmPage(res, token) {
+    res.status(200).send(`
+    <html>
+        <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Log In — Auction Mentor</title>
+            <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+        </head>
+        <body style="margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center; background:#0f0f1a; font-family:Inter,system-ui,sans-serif;">
+            <div style="max-width:400px; text-align:center; padding:40px 30px;">
+                <div style="font-size:48px; margin-bottom:16px;">🔐</div>
+                <h2 style="color:#fff; font-size:22px; margin:0 0 12px;">Welcome to Auction Mentor</h2>
+                <p style="color:#888; font-size:14px; line-height:1.6; margin:0 0 28px;">Click the button below to log in to your account.</p>
+                <a href="/api/auth/verify?token=${encodeURIComponent(token)}&confirm=1"
+                   style="display:inline-block; padding:16px 40px; background:linear-gradient(135deg,#5FA074,#4A7C59); color:#fff; text-decoration:none; border-radius:10px; font-weight:600; font-size:16px;">
+                    Log In to Academy →
+                </a>
+                <p style="color:#666; font-size:12px; margin-top:24px;">This link expires in 48 hours and can only be used once.</p>
+            </div>
+        </body>
+    </html>
+    `);
 }
 
 function sendErrorPage(res, title, message) {
