@@ -39,10 +39,11 @@ export default async function handler(req, res) {
         }
 
         // ─── Check if this email has an active subscription ──────────────
+        // Use ilike for case-insensitive email matching
         const { data: user, error: userError } = await supabase
             .from('users')
             .select('id, email, tradingview_username, status')
-            .eq('email', cleanEmail)
+            .ilike('email', cleanEmail)
             .in('status', ['active', 'past_due'])
             .single();
 
